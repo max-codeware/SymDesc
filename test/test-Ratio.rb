@@ -64,7 +64,19 @@ class TestRatio < Test::Unit::TestCase
     end
 
     def test_sum
+        comp = 2/3.to_r
+        assert_equal @r + @r, comp,       "Sum between Ratio and Ratio failed"
+        assert_equal @r + 1.0/3, comp,    "Sum between Ratio and Float failed"
+        assert_equal @r + 1/3.to_r, comp, "Sum between Ratio and Rational failed" 
 
+        comp = 16/3.to_r
+        assert_equal @r + 5, comp,                  "Sum between Ratio and Integer failed"
+        assert_equal @r + SymDesc::Int.new(5),comp, "Sum between Ratio and Int failed"
+
+        assert_equal @r + 2.0/4, 5/6.to_r,          "Sum between Ratio and Float failed" 
+    end
+
+    def test_sub
     end
 
 end
