@@ -3,6 +3,10 @@ module SymDesc
 	class RecursionError < SystemStackError; end
 	class SymDescError   < StandardError   ; end
 
+	SYM_CONFIG = {
+        :ratio_precision => 1e-16
+	}
+
 	%w|
 	       SymDesc/Base.rb 
 	       SymDesc/Variable.rb 
