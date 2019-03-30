@@ -170,7 +170,9 @@ module SymDesc
         end 
     
         def opt_sum(b)
-    
+            b = b.symdescfy
+            return self + b if b.is_a? Number 
+            nil
         end
     
         def -(b)
@@ -178,7 +180,9 @@ module SymDesc
         end
     
         def opt_sub
-    
+            b = b.symdescfy
+            return self - b if b.is_a? Number 
+            nil
         end
     
         def -@
