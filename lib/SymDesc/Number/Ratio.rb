@@ -278,6 +278,8 @@ module SymDesc
             end
             io
         end
+
+        alias :inspect :to_s
     
     private
 
