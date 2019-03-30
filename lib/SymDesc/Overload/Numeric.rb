@@ -8,6 +8,8 @@ end
 
 class Float
     def to_symdesc
+    	# return SymDesc::Infinity if self == INFINITY 
+    	# return SymDesc::Nan      if self == NAN
         return SymDesc::Ratio.new(self)
     end
 end
