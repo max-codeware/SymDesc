@@ -11,13 +11,9 @@ module SymDesc::Base
         return true
     end
 
-    module_function :is_symbolic?
-
     def =~(b)
    	    false 
    	end
-
-   	module_function :=~
 
 protected
     def __io_append(io,*args)
@@ -37,5 +33,5 @@ protected
             io << a
         end
     end
-    module_function :__io_append
+    
 end
