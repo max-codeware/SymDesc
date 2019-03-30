@@ -184,7 +184,29 @@ module SymDesc
     	end
     
     	def +(b)
-    
+            b = b.symdescfy
+            return case b 
+                when Ratio 
+                    if denominator == b.denominator
+                        num = numerator + b.numerator
+                        den = denominator
+                    else 
+                        n1,n2 = numerator,   b.numerator
+                        d1,d2 = denominator, b.denominator
+                        num = n1 * d2 + n2 * d1
+                        den = d1 * d2
+                    end
+                    Ratio.new num,den
+                when Int 
+                    d = denominator
+                    Ratio.new numerator + v.value * d, d
+                when BinaryOp 
+                    b + self 
+                when Neg 
+                    self - b.value 
+                else 
+                    Sum.new b, self 
+            end
         end 
     
         def opt_sum(b) # :nodoc:
@@ -203,7 +225,7 @@ module SymDesc
             nil
         end
     
-        # Returns SymDesc::Ratio negated (Wrapped in SymDesc::Neg class)
+        # Returns SymDesc::Ratio negated (wrapped in SymDesc::Neg class)
         def -@
             return Neg.new self
         end
