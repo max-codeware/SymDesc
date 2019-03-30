@@ -100,32 +100,46 @@ module SymDesc
     
             def __have_nan_or_infinity(*val)
                 val.each do |v|
-                	return true if v == Float::INFINITY || v == Float::NAN
+                    if v.is_a? Float
+                	    return true if v.nan? || v.infinite?
+                    end
                 end
                 false
             end
     
-            def __real_from_numeric(n)
+            def __ratio_from_numeric(n)
                 if n.is_a? Integer
                 	return n,1
                 end
                 if n.is_a? Rational 
                 	return n.numerator,n.denominator
                 end
-                fn = n.floor
-                if 1 - RATIO_PRECISION < n - fn 
-                	return fn + 1,1
+                n1, n2 = 1,0
+                d1, d2 = 0,1
+                v      = n
+                loop do
+                    v1  = v.floor
+                    tmp = n1
+                    n1  = v1 * n1 + n2 
+                    n2  = tmp
+
+                    tmp = d1
+                    d1  = v1 * d1 + d2 
+                    d2  = tmp
+                    v   = 1.0/(v - v1)
+                    break if v == Float::INFINITY
+                    break if (n - n1/d1.to_f).abs < n * RATIO_PRECISION
                 end
-     
+                return n1,d1
             end
     
             # Given two numbers `a` and `b`, and knowing
             # at least one is a float (or a rational) computes
             # the numerator and the denominator of the division
             # `a/b`
-            def __real_from_numeric2(a,b)
-                n1,d1 = __real_from_numeric(a)
-                n2,d2 = __real_from_numeric(b)
+            def __ratio_from_numeric2(a,b)
+                n1,d1 = __ratio_from_numeric(a)
+                n2,d2 = __ratio_from_numeric(b)
                 return n1*d2, d1*n2
             end
     
