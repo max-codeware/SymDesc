@@ -15,4 +15,8 @@ module SymDesc
 	  |.each do |file|
 		  require_relative file
 	  end
+
+	ZERO = Int.new 0
+	ONE  = Int.new 1
+	TWO  = Int.new 2
 end
