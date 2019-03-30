@@ -186,7 +186,7 @@ module SymDesc
         end
     
         def -@
-    
+            return Neg.new self
         end
     
         def ==(b)
