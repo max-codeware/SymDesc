@@ -50,7 +50,7 @@ module SymDesc
                             when Integer 
                             	num,den = n,1
                             when Float 
-                            	num,den = __real_from_numeric(n)
+                            	num,den = __ratio_from_numeric(n)
                             when Rational 
                             	num,den = n.numerator,n.denominator
                         end
