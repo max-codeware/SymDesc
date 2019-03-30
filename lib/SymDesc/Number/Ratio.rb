@@ -19,7 +19,7 @@ module SymDesc
     
     	class <<self
     
-    		RATIO_PRECISION = 1e-7
+    		RATIO_PRECISION = SYM_CONFIG[:ratio_precision] || 1e-16
     		private_constant :RATIO_PRECISION
     
             alias   :__new :new 
