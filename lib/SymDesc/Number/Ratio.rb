@@ -38,8 +38,8 @@ module SymDesc
                     	end
                         if (n.is_a? Integer) && (d.is_a? Integer)
                         	num,den = n,d
-                        elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_? Rational) || (d.is_a? Rational)
-                        	num,den   = __real_from_numeric2(n,d)
+                        elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
+                        	num,den   = __ratio_from_numeric2(n,d)
                         end
                     else
                     	if n < 0
@@ -79,7 +79,7 @@ module SymDesc
                 end
                 raise NotImplementedError, 
                     "Symbolic rationals for \
-                        #{n}" << d ? "and #{d} " : " " << "not implemented yet"
+                        #{n}" << (d ? " and #{d} " : " " << "not implemented yet")
             end
     
         private 
