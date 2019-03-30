@@ -36,7 +36,7 @@ module SymDesc
     
     	def opt_sum(b)
             if self == b 
-            	return Prod.new(2,self)
+            	return Prod.new(TWO,self)
             end
             nil
     	end
@@ -85,18 +85,18 @@ module SymDesc
     private
         
         def __sum_self(b)
-        	return Prod.new(2,self) if self == b
+        	return Prod.new(TWO,self) if self == b
         	Sum.new(self,b)
         end
     
         def __sum_numeric(b)
         	return self if b.zero?
-        	b = b.to_r if b.is_a? Float
+        	b = b.symdescfy if b.is_a? Float
         	Sum.new(self,b)
         end
     
         def __sub_self(b)
-        	return 0 if self == b 
+        	return ZERO if self == b 
         	Sub.new(self,b)
         end
     
@@ -111,7 +111,7 @@ module SymDesc
                 		if (l = b.left) == 2
                 			return self
                 		end
-                		return Prod.new(1 - l,self)
+                		return Prod.new(ONE - l,self)
                 	end 
                 when Div 
                 	if b =~ self
@@ -124,7 +124,7 @@ module SymDesc
     
         def __sub_numeric(b)
             return self if b == 0
-            b = b.to_r if b.is_a? Float 
+            b = b.symdescfy if b.is_a? Float 
             return Sub.new(self,b)
         end
     
