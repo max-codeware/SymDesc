@@ -19,12 +19,33 @@ module SymDesc
     
     	class <<self
     
+            # Constant defining the approximation error
+            # when a Float number is converted into a symbolic
+            # rational
     		RATIO_PRECISION = SYM_CONFIG[:ratio_precision] || 1e-16
     		private_constant :RATIO_PRECISION
     
+
             alias   :__new :new 
-            private :__new
+            private :__new 
     
+            # :call-seq:
+            #   new(Integer)  -> SymDesc::Int
+            #   new(Float)    -> SymDesc::Ratio
+            #   new(Rational) -> SymDesc::Ratio
+            #   new(Integer,Integer) -> SymDesc::Ratio
+            #
+            # Creates a new symbolic rational performing the needed
+            # simplifications. Parameters `n` and `d` can be Integer,
+            # Float or Rational. If only 'n' is given, a new Ratio
+            # is created with the correct simplifications. 
+            # If both 'n' and 'd' are provided, a new rational is created
+            # simplifying `n/d` fraction.
+            #
+            # Note: A SymDesc::Int is returned if the fraction is in the form
+            # `n/1`.
+            #
+            # No support for Float::INFINITY or Float::NAN
             def new(n,d = nil)
             	__ensure_rationalizable(n,d)
             	num   = den = ratio = nil
@@ -84,7 +105,7 @@ module SymDesc
     
         private 
     
-            # TODO: checking against Infinity and Nan
+            
             def __ensure_rationalizable(*values)
             	values.each do |v|
             		unless (v.is_a? Integer)  || 
@@ -151,10 +172,7 @@ module SymDesc
                 end 
                 return a 
             end
-    	end
-    
-    
-        # Here begins the Ratio class
+    	end # End metaclass
     
     	attr_reader :numerator
     	attr_reader :denominator
@@ -169,7 +187,7 @@ module SymDesc
     
         end 
     
-        def opt_sum(b)
+        def opt_sum(b) # :nodoc:
             b = b.symdescfy
             return self + b if b.is_a? Number 
             nil
@@ -179,16 +197,22 @@ module SymDesc
     
         end
     
-        def opt_sub
+        def opt_sub # :nodoc:
             b = b.symdescfy
             return self - b if b.is_a? Number 
             nil
         end
     
+        # Returns SymDesc::Ratio negated (Wrapped in SymDesc::Neg class)
         def -@
             return Neg.new self
         end
     
+        # :call-seq:
+        #    ratio == obj -> true or false
+        #
+        # Returns true only if the `obj` is a SymDesc::Ratio
+        # or a Float or a Rational and it represents the same numeric value 
         def ==(b)
             return case b
                 when Rational,Ratio 
@@ -201,12 +225,20 @@ module SymDesc
             end
         end
     
+        # :call-seq:
+        #   to_s -> string
+        #   to_s(str_io) -> str_io
+        #
+        # If no argument is provided, it returns a string representation
+        # of the fraction. If a StringIO object is passed, the string
+        # representation is appended to the buffer and the buffer is returned. 
         def to_s(io = nil)
         	if io 
                 __io_append(io,@numerator, DIV_ID, @denominator) 
             else
                return "#{@numerator}/#{@denominator}"
-           end
+            end
+            io
         end
     
     private
