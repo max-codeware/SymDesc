@@ -187,7 +187,7 @@ module SymDesc
             b = b.symdescfy
             return case b 
                 when Number
-                  __ratio_sum_ratio b
+                  __sum_number b
                 when BinaryOp 
                     b + self 
                 when Neg 
@@ -204,7 +204,17 @@ module SymDesc
         end
     
         def -(b)
-    
+            b = b.symdescfy
+            return case b 
+                when Number
+                    __sub_number b 
+                when BinaryOp
+                    __sub_binary_op b 
+                when Neg 
+                    self + b.value 
+                else 
+                    Sub.new self, b 
+            end
         end
     
         def opt_sub # :nodoc:
@@ -253,21 +263,40 @@ module SymDesc
     
     private
 
-        def __ratio_sum_ratio(b)
+        def __sum_number(b)
+            __send_op :+, b
+        end
+
+        def __sub_number(b)
+            __send_op :-, b
+        end
+        
+        def __send_op(op,b)
             if b.is_a? Ratio 
                 if denominator == b.denominator
-                    num = numerator + b.numerator
+                    num = numerator.send op,b.numerator
                     den = denominator
                 else 
                     n1,n2 = numerator,   b.numerator
                     d1,d2 = denominator, b.denominator
-                    num = n1 * d2 + n2 * d1
+                    num = (n1 * d2).send op, n2 * d1
                     den = d1 * d2
                 end
                 return Ratio.new num,den
             end
             d = denominator
-            return Ratio.new numerator + v.value * d, d
+            return Ratio.new numerator.send(op,b.value * d), d
+        end
+
+        def __sub_binary_op(b)
+            return case b 
+                when Sum 
+                    self - b.left - b.right
+                when Sub 
+                    self - b.left + b.right 
+                else
+                    Sub.new b, self 
+            end
         end
         
     end
