@@ -57,7 +57,7 @@ module SymDesc
                     end
                 end
                 if num && den
-                	m    = __mcm(num,den)
+                	m    = __mcd(num,den)
                 	num /= m 
                 	den /= m
                 	case den 
@@ -129,7 +129,7 @@ module SymDesc
                 return n1*d2, d1*n2
             end
     
-            def __mcm(a,b)
+            def __mcd(a,b)
             	return 1 if a.zero? || b.zero?
                 a,b = b,a unless b < a 
                 while b != 0 
