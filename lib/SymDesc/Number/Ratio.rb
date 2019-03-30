@@ -90,7 +90,7 @@ module SymDesc
             		unless (v.is_a? Integer)  || 
             			   (v.is_a? Float)    || 
             			   (v.is_a? Rational) || 
-            			   (v.nil?)
+            			   (v.nil? && values.size > 1)
     
             		    raise ArgumentError,
             		    "Expected Integer of Float but #{v.class} found"
