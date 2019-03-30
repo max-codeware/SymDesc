@@ -186,20 +186,8 @@ module SymDesc
     	def +(b)
             b = b.symdescfy
             return case b 
-                when Ratio 
-                    if denominator == b.denominator
-                        num = numerator + b.numerator
-                        den = denominator
-                    else 
-                        n1,n2 = numerator,   b.numerator
-                        d1,d2 = denominator, b.denominator
-                        num = n1 * d2 + n2 * d1
-                        den = d1 * d2
-                    end
-                    Ratio.new num,den
-                when Int 
-                    d = denominator
-                    Ratio.new numerator + v.value * d, d
+                when Number
+                  __ratio_sum_ratio b
                 when BinaryOp 
                     b + self 
                 when Neg 
@@ -264,6 +252,23 @@ module SymDesc
         end
     
     private
+
+        def __ratio_sum_ratio(b)
+            if b.is_a? Ratio 
+                if denominator == b.denominator
+                    num = numerator + b.numerator
+                    den = denominator
+                else 
+                    n1,n2 = numerator,   b.numerator
+                    d1,d2 = denominator, b.denominator
+                    num = n1 * d2 + n2 * d1
+                    den = d1 * d2
+                end
+                return Ratio.new num,den
+            end
+            d = denominator
+            return Ratio.new numerator + v.value * d, d
+        end
         
     end
 end
