@@ -183,6 +183,15 @@ module SymDesc
             freeze
     	end
     
+        # :call-seq:
+        #   ratio + obj -> new_obj
+        #
+        # Performs a symbolic sum between a symbolic rational
+        # and `obj`, returning a new symbolic object if the operation
+        # creates a new tree branch, or a symbolic number if
+        # `obj` is a SymDesc::Number. Simplification is automatic.
+        #
+        # If b is not a symbolic object, a conversion is tried
     	def +(b)
             b = b.symdescfy
             return case b 
@@ -203,6 +212,15 @@ module SymDesc
             nil
         end
     
+        # :call-seq:
+        #   ratio + obj -> new_obj
+        #
+        # Performs a symbolic subtraction between a symbolic rational
+        # and `obj`, returning a new symbolic object if the operation
+        # creates a new tree branch, or a symbolic number if
+        # `obj` is a SymDesc::Number. Simplification is automatic.
+        #
+        # If b is not a symbolic object, a conversion is tried
         def -(b)
             b = b.symdescfy
             return case b 
