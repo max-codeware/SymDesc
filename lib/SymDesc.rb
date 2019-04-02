@@ -10,6 +10,7 @@ module SymDesc
 	%w|
 	       SymDesc/Base.rb 
 	       SymDesc/Variable.rb 
+	       SymDesc/Neg.rb
 	       SymDesc/Overload/Numeric.rb 
 	       SymDesc/Overload/Object.rb 
 	       SymDesc/Overload/Symbol.rb 
