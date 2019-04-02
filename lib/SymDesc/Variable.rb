@@ -3,6 +3,14 @@ require_relative "Base.rb"
 
 module SymDesc
 
+    # __     __         _       _     _      
+    # \ \   / /_ _ _ __(_) __ _| |__ | | ___ 
+    #  \ \ / / _` | '__| |/ _` | '_ \| |/ _ \
+    #   \ V / (_| | |  | | (_| | |_) | |  __/
+    #    \_/ \__,_|_|  |_|\__,_|_.__/|_|\___|
+
+    # This class describes a symbolic variable. It can be resolved
+    # with a numerical value or substituted with another expression.
     class Variable
     
     	include Base
@@ -34,20 +42,27 @@ module SymDesc
             end
     	end
     
-    	def opt_sum(b)
+    	def opt_sum(b) # :nodoc:
             if self == b 
             	return Prod.new(TWO,self)
             end
             nil
     	end
     
+        # :call-seq:
+        #   var - obj -> new_obj
+        #
+        # It subtracts `obj` to the variable `var` returning
+        # a new symbolic object. Simplification is automatic.
+        #
+        # If `obj` is not a symbolic object, a conversion is attempted
     	def -(b)
             return case b 
                    
                 when self.class 
                     __sub_self b 
                 when Neg 
-                	self + b.value 
+                	self + b.argument
                 when BinaryOp
                 	__sub_binaryop b
                 when Numeric
@@ -57,12 +72,12 @@ module SymDesc
             end
     	end
     
-    	def opt_sub(b)
+    	def opt_sub(b) # :nodoc:
     		return self - b if self =~ b
     		nil 
     	end
     
-        def =~(b)
+        def =~(b) # :nodoc:
         	return case b 
     
                 when Variable
@@ -74,9 +89,17 @@ module SymDesc
         	end
         end
     
+        # :call-seq:
+        #   to_s -> string
+        #   to_s(str_io) -> str_io
+        #
+        # If no argument is provided, it returns a string representation
+        # of the symbolic variable. If a StringIO object is passed, the string
+        # representation is appended to the buffer and this last is returned.
         def to_s(io = nil)
             if io 
                 __io_append(io,name) 
+                return io
             else
                 return name.dup 
             end
