@@ -38,7 +38,7 @@ module SymDesc
                 when Int 
                     Number.new(value + b.value) 
                 when Neg
-                    self - b.value 
+                    self - b.argument 
                 else 
                     Sum.new(b,self)
             end
@@ -58,7 +58,7 @@ module SymDesc
                 when Int 
                     Number.new(value - b.value)
                 when Neg
-                    self + b.value 
+                    self + b.argument 
                 else
                     Sub.new(self,b)
             end
