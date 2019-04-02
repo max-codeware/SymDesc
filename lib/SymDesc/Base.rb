@@ -23,6 +23,8 @@ protected
         	begin
                 if a.is_symbolic?
                 	a.to_s(io)
+                else
+                    io << a
                 end
             rescue SystemStackError => e
             	raise RecursionError,"\
@@ -30,7 +32,6 @@ protected
                     #{e.backtrace}\
             	"
             end
-            io << a
         end
     end
     
