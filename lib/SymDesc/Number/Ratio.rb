@@ -191,7 +191,7 @@ module SymDesc
         # creates a new tree branch, or a symbolic number if
         # `obj` is a SymDesc::Number. Simplification is automatic.
         #
-        # If b is not a symbolic object, a conversion is tried
+        # If b is not a symbolic object, a conversion is attempted
     	def +(b)
             b = b.symdescfy
             return case b 
@@ -200,7 +200,7 @@ module SymDesc
                 when BinaryOp 
                     b + self 
                 when Neg 
-                    self - b.value 
+                    self - b.argument 
                 else 
                     Sum.new b, self 
             end
@@ -220,7 +220,7 @@ module SymDesc
         # creates a new tree branch, or a symbolic number if
         # `obj` is a SymDesc::Number. Simplification is automatic.
         #
-        # If b is not a symbolic object, a conversion is tried
+        # If b is not a symbolic object, a conversion is attempted
         def -(b)
             b = b.symdescfy
             return case b 
@@ -229,7 +229,7 @@ module SymDesc
                 when BinaryOp
                     __sub_binary_op b 
                 when Neg 
-                    self + b.value 
+                    self + b.argument
                 else 
                     Sub.new self, b 
             end
