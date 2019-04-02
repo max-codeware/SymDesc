@@ -26,13 +26,20 @@ module SymDesc
     		@name = name
     	end
     
+        # :call-seq:
+        #   var + obj -> new_obj
+        #
+        # It sums `obj` to the variable `var` returning
+        # a new symbolic object. Simplification is automatic.
+        #
+        # If `obj` is not a symbolic object, a conversion is attempted
     	def +(b)
             return case b 
                    
                 when self.class 
                     __sum_self b 
                 when Neg 
-                	self - b.value 
+                	self - b.argument
                 when BinaryOp
                 	b + self
                 when Numeric
