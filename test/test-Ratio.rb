@@ -18,9 +18,9 @@ class TestRatio < Test::Unit::TestCase
         assert r.is_a?(SymDesc::Int),    "Conversion of Integer to Rational should return Int"
         assert_equal r,5,                "5 must be equal to itself"
 
-        #r = SymDesc::Ratio.new(-1.25)
-        #assert r.is_a?(SymDesc::Neg),    "Conversion of -1.25 should return Neg"
-        #assert_equal r,-5/4.to_r,        "Conversion of -1.25 to -4/5 failed"
+        r = SymDesc::Ratio.new(-1.25)
+        assert r.is_a?(SymDesc::Neg),    "Conversion of -1.25 should return Neg"
+        assert_equal r,-5/4.to_r,        "Conversion of -1.25 to -4/5 failed"
 
         assert_raise(ArgumentError)       { SymDesc::Ratio.new("")           }
         assert_raise(NotImplementedError) { SymDesc::Ratio.new(Float::NAN)   }
