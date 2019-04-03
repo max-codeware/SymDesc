@@ -11,7 +11,7 @@ module SymDesc::Base
         return true
     end
 
-    def =~(b)
+    def =~(b) # :nodoc:
    	    false 
    	end
 
@@ -29,8 +29,7 @@ protected
             rescue SystemStackError => e
             	raise RecursionError,"\
                     Recursive call to :__io_append detected\n\
-                    #{e.backtrace}\
-            	"
+                    #{e.backtrace}\"
             end
         end
     end
