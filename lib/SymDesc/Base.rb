@@ -29,7 +29,8 @@ protected
             rescue SystemStackError => e
             	raise RecursionError,"\
                     Recursive call to :__io_append detected\n\
-                    #{e.backtrace}\"
+                    #{e.backtrace}\
+            	"
             end
         end
     end
