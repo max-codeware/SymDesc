@@ -83,6 +83,16 @@ module SymDesc
     		return self - b if self =~ b
     		nil 
     	end
+
+        # :call-seq:
+        #   var == obj -> true or false
+        #
+        # It compares `var` with `obj`, returning true if `obj`
+        # is a Variable and has the same name
+        def ==(b)
+            return true if b.is_a?(Variable) && (b.name == name)
+            false 
+        end
     
         def =~(b) # :nodoc:
         	return case b 
