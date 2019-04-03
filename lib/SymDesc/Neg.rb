@@ -54,6 +54,7 @@ module SymDesc
         #
         # If `obj` is not symbolic, a conversion is attempted 
     	def +(b)
+            b = b.symdescfy
     		return case b
     		    when Neg
     		    	return argument - b.argument 
@@ -86,6 +87,7 @@ module SymDesc
         #
         # If `obj` is not symbolic, a conversion is attempted 
     	def -(b)
+            b = b.symdescfy
     		return case b
     		    when Neg
     		    	 b.argument - argument
