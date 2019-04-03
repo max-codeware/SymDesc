@@ -11,7 +11,7 @@ module SymDesc::Base
         return true
     end
 
-    def =~(b) # :nodoc:
+    def =~(b)
    	    false 
    	end
 
