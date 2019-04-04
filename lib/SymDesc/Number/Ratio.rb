@@ -16,13 +16,6 @@ module SymDesc
        # and to ensure a correct simplification to the given inputs
     
     	class <<self
-    
-            # Constant defining the approximation error
-            # when a Float number is converted into a symbolic
-            # rational
-    		RATIO_PRECISION = SYM_CONFIG[:ratio_precision] || 1e-16
-    		private_constant :RATIO_PRECISION
-    
 
             alias   :__new :new 
             private :__new 
@@ -127,6 +120,7 @@ module SymDesc
             end
     
             def __ratio_from_numeric(n)
+                @@precision ||= (SYM_CONFIG[:ratio_precision] || 1e-16)
                 if n.is_a? Integer
                 	return n,1
                 end
@@ -147,7 +141,7 @@ module SymDesc
                     d2  = tmp
                     v   = 1.0/(v - v1)
                     break if v == Float::INFINITY
-                    break if (n - n1/d1.to_f).abs < n * RATIO_PRECISION
+                    break if (n - n1/d1.to_f).abs < n * @@precision
                 end
                 return n1,d1
             end
