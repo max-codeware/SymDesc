@@ -74,9 +74,56 @@ class TestRatio < Test::Unit::TestCase
         assert_equal @r + SymDesc::Int.new(5),comp, "Sum between Ratio and Int failed"
 
         assert_equal @r + 2.0/4, 5/6.to_r,          "Sum between Ratio and Float failed" 
+
+        comp = 4/9.to_r
+        r1   = SymDesc::Ratio.new 7.0/9
+        r2   = -@r 
+        assert_equal r1 + r2, comp,  "Sum between Ratio and Neg(Ratio) failed"
     end
 
+    def test_opt_sum
+        r  = SymDesc::Ratio.new 2.5
+        i  = SymDesc::Int.new   5
+        n  = @r.opt_sum r
+        assert n.is_a?(Ratio), ":opt_sum Returned a wrong type"
+        n  = @r.opt_sum i 
+        assert n.is_a?(Ratio), ":opt_sum Returned a wrong type"
+
+        x = SymDesc::Variable.new :x
+        assert_nil @r.opt_sum(x), ":opt_sum was expected to return nil on non Number objects"
+    end
+
+
     def test_sub
+        r  = Ratio.new 5,2
+        r1 = Ratio.new 3,2
+
+        comp = 1
+        assert_equal r - r1,       comp,  "Subtraction between Ratio and Ratio failed"
+        assert_equal r - 3/2.0,    comp,  "Subtraction between Ratio and Float failed"
+        assert_equal r - 3/2.to_r, comp,  "Subtraction between Ratio and Rational failed" 
+
+        comp = 1/2.to_r
+        assert_equal r - 2, comp,                  "Subtraction between Ratio and Integer failed"
+        assert_equal r - SymDesc::Int.new(2),comp, "Subtraction between Ratio and Int failed"
+
+        assert_equal r - 3.0/7, 29/14.to_r,        "Subtraction between Ratio and Float failed" 
+
+        comp = 17/6.to_r
+        r2   = -@r 
+        assert_equal r - r2, comp,  "Subtraction between Ratio and Neg(Ratio) failed"
+    end
+
+    def test_opt_sub
+        r  = SymDesc::Ratio.new 5,2
+        i  = SymDesc::Int.new   2
+        n  = r.opt_sub @r
+        assert n.is_a?(Ratio), ":opt_sum Returned a wrong type"
+        n  = r.opt_sub i 
+        assert n.is_a?(Ratio), ":opt_sum Returned a wrong type"
+
+        x = SymDesc::Variable.new :x
+        assert_nil r.opt_sub(x), ":opt_sub was expected to return nil on non Number objects"
     end
 
 end
