@@ -1,6 +1,4 @@
 
-require_relative "Number.rb"
-
 module SymDesc
     #  ____       _   _       
     # |  _ \ __ _| |_(_) ___  

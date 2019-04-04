@@ -1,6 +1,4 @@
 
-require_relative "Base.rb"
-
 module SymDesc
 
     # __     __         _       _     _      

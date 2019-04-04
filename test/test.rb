@@ -6,3 +6,5 @@ require "test/unit"
   |.each do |file|
   	    require_relative file 
   	end
+
+ include SymDesc
