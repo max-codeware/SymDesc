@@ -235,7 +235,7 @@ module SymDesc
             end
         end
     
-        def opt_sub # :nodoc:
+        def opt_sub(b) # :nodoc:
             b = b.symdescfy
             return self - b if b.is_a? Number 
             nil
