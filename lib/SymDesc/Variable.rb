@@ -32,6 +32,7 @@ module SymDesc
         #
         # If `obj` is not a symbolic object, a conversion is attempted
     	def +(b)
+            b = b.symdescfy
             return case b 
                    
                 when self.class 
@@ -62,6 +63,7 @@ module SymDesc
         #
         # If `obj` is not a symbolic object, a conversion is attempted
     	def -(b)
+            b = b.symdescfy
             return case b 
                    
                 when self.class 
