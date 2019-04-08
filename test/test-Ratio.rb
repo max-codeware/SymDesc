@@ -1,4 +1,6 @@
 
+require_relative "test.rb"
+
 class TestRatio < Test::Unit::TestCase
 
 	def setup

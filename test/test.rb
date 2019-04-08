@@ -1,10 +1,5 @@
 
 require "test/unit"
+require_relative "../lib/SymDesc.rb"
 
-%w| ../lib/SymDesc.rb
-    test-Ratio.rb 
-  |.each do |file|
-  	    require_relative file 
-  	end
-
- include SymDesc
+include SymDesc
