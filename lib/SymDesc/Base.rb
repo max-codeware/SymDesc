@@ -15,6 +15,13 @@ module SymDesc::Base
    	    false 
    	end
 
+    for name in %w|+ - * / ** opt_sum opt_sub opt_prod opt_div opt_pow ==|
+        eval "
+            def #{name}(b)
+                raise NotImplementedError, \"Method `#{name}' for \#\{self.class\} not implemented yiet\"
+            end"
+    end
+
 protected
     def __io_append(io,*args)
         raise ArgumentError, 
