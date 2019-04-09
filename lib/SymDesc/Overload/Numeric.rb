@@ -14,8 +14,19 @@ class Float
     end
 end
 
-class Rational
-    def to_symdesc
-        return SymDesc::Ratio.new(self)
+if self.class.const_defined? :Rational
+    class Rational
+        def to_symdesc
+            return SymDesc::Ratio.new(self)
+        end
+    end
+else
+    tail = (ENGINE.mruby? ? : "for mruby" : "for ruby #{RUBY_VERSION}")
+    warn "Rational class not supported #{tail}"
+    class Rational
+        class <<self
+            undef_method :new
+        end
+        freeze
     end
 end
