@@ -12,8 +12,9 @@ module Kernel
 	end
 
 	unless respond_to? :warn
-		def warn(msg)
-			$stderr << "warning: #{msg}\n"
+		def warn(msg, loc = nil)
+			loc &&= "#{loc}: "
+			$stderr << "#{loc}warning: #{msg}\n"
 		end
 	end
 
