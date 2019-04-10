@@ -12,15 +12,36 @@ module SymDesc
     class Variable
     
     	include Base
+
+        class <<self 
+            alias :__new :new
+            private :new 
+
+            def new(name)
+                if name.is_a? String
+                    name = name.to_sym
+                end
+                raise ArgumentError, 
+                     "A variable name must be a Symbol or a String" unless name.is_a? Symbol
+                if SYM_CONFIG[:var_scope] == :global
+                    @@syms ||= {}
+                    if s = @@syms[name]
+                        return s 
+                    else
+                        return @@syms[name] = __new(name)
+                    end
+                else
+                    msg = "Warning: variable creation without a definition scope. Use `vars' method instead"
+                    loc = caller.first
+                    warn msg,loc
+                end
+                return __new(name)
+            end
+        end
     
     	attr_reader :name
     
     	def initialize(name)
-    		if name.is_a? Symbol
-    			name = name.to_s
-    		end
-    		raise ArgumentError, 
-    		     "A variable name must be a Symbol or a String" unless name.is_a? String
     		@name = name
     	end
     
