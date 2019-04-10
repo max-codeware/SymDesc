@@ -21,7 +21,7 @@ if self.class.const_defined? :Rational
         end
     end
 else
-    tail = (ENGINE.mruby? ? : "for mruby" : "for ruby #{RUBY_VERSION}")
+    tail = (ENGINE.mruby? ?  "for mruby" : "for ruby #{RUBY_VERSION}")
     warn "Rational class not supported #{tail}"
     class Rational
         class <<self
