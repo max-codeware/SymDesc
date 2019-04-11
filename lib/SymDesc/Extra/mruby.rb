@@ -17,19 +17,37 @@ module Kernel
 			$stderr << "#{loc}warning: #{msg}\n"
 		end
 	end
-
 end
 
-module ENGINE
-	class <<self
-
-	    def ruby?
-	    	RUBY_ENGINE == "ruby"
-	    end
-
-	    def mruby?
-	    	RUBY_ENGINE == "mruby"
-	    end
+class StringIO
+	def initialize
+		@buffer = ""
+		@closed = false
 	end
-	freeze
+
+	def <<(obj)
+        if !@closed
+        	case obj
+        	    when Numeric, Symbol
+        	    	@buffer << obj.to_s
+        	    else
+        	    	@buffer << obj
+        	end
+        else
+        	raise IOError, "(not opened for writing)"
+        end
+        self
+    end
+
+    def close
+    	@closed = true
+    end
+
+    def closed?
+    	@closed
+    end
+
+    def string
+    	@buffer
+    end
 end
