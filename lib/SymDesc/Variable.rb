@@ -140,9 +140,11 @@ module SymDesc
                 __io_append(io,name) 
                 return io
             else
-                return name.dup 
+                return name.to_s 
             end
         end
+
+        alias :inspect :to_s
     
     private
         
