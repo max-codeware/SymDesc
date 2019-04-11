@@ -25,7 +25,7 @@ module SymDesc::Base
 protected
     def __io_append(io,*args)
         raise ArgumentError, 
-            "Expected StringIO (#{io.class found})" unless io.is_a? StringIO
+            "Expected StringIO (#{io.class}) found" unless io.is_a? StringIO
         args.each do |a|
         	begin
                 if a.is_symbolic?
