@@ -23,7 +23,8 @@ module SymDesc
                 end
                 raise ArgumentError, 
                      "A variable name must be a Symbol or a String" unless name.is_a? Symbol
-                if SYM_CONFIG[:var_scope] == :global
+                @@sym_config ||= (SYM_CONFIG[:var_scope] || :global)
+                if @@sym_config == :global
                     @@syms ||= {}
                     if s = @@syms[name]
                         return s 
