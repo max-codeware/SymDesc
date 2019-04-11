@@ -23,16 +23,20 @@ module SymDesc
 	}
 
 	%w|
+	       SymDesc/Extra/Engine_conf.rb
 	       SymDesc/Base.rb 
 	       SymDesc/Variable.rb 
 	       SymDesc/Neg.rb
 	       SymDesc/Overload/Numeric.rb 
 	       SymDesc/Overload/Object.rb 
-	       SymDesc/Overload/Symbol.rb 
+	       SymDesc/Overload/Symbol.rb
+	       SymDesc/Overload/Kernel.rb 
 	       SymDesc/Number/Number.rb 
 	       SymDesc/Number/Int.rb 
 	       SymDesc/Number/Ratio.rb
 	       SymDesc/BinaryOp/BinaryOp.rb
+	       SymDesc/BinaryOp/Sum.rb
+	       SymDesc/BinaryOp/Sub.rb
 	  |.each do |file|
 		  require_relative file
 	  end
