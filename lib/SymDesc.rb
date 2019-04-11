@@ -8,16 +8,18 @@ module SymDesc
 	    if !Kernel.respond_to? :require 
 	    	raise SymDescError, "mrbgem-require not found for mruby. Please install it"
 	    end
-	    require File.expand_path("./SymDesc/mruby.rb",File.dirname(__FILE__))
+	    require File.expand_path("./SymDesc/Extra/mruby.rb",File.dirname(__FILE__))
 	elsif RUBY_ENGINE == "ruby"
 		engine = :ruby
+		require_relative "SymDesc/Extra/ruby.rb"
 	else
 		raise SymDescError,"Ruby engine #{RUBY_ENGINE} not supported yet"
 	end
 
 	SYM_CONFIG = {
         :ratio_precision => 1e-16,
-        :symdesc_engine  => engine
+        :symdesc_engine  => engine,
+        :var_scope       => :global
 	}
 
 	%w|
