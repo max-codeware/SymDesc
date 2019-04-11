@@ -136,9 +136,9 @@ module SymDesc
             _io = io || StringIO.new
             case argument
                 when Sum, Sub 
-                    __io_append(io,SUB_ID,"(",@argument,")")
+                    __io_append(_io,SUB_ID,"(",@argument,")")
                 else
-                    __io_append(io,SUB_ID,@argument)
+                    __io_append(_io,SUB_ID,@argument)
             end
             if !io
             	_io.close
