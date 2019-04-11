@@ -114,6 +114,8 @@ module SymDesc
             end
             io
         end
+
+        alias :inspect :to_s
     
         # :call-seq:
         #    int == obj -> true or false
