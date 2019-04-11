@@ -32,6 +32,7 @@ module SymDesc
 	       SymDesc/Number/Number.rb 
 	       SymDesc/Number/Int.rb 
 	       SymDesc/Number/Ratio.rb
+	       SymDesc/BinaryOp/BinaryOp.rb
 	  |.each do |file|
 		  require_relative file
 	  end
