@@ -14,8 +14,6 @@ module SymDesc
     	include Base
 
         class <<self 
-            alias :__new :new
-            private :new 
 
             def new(name)
                 if name.is_a? String
@@ -29,14 +27,14 @@ module SymDesc
                     if s = @@syms[name]
                         return s 
                     else
-                        return @@syms[name] = __new(name)
+                        return @@syms[name] = super(name)
                     end
                 else
                     msg = "Warning: variable creation without a definition scope. Use `vars' method instead"
                     loc = caller.first
                     warn msg,loc
                 end
-                return __new(name)
+                return super(name)
             end
         end
     

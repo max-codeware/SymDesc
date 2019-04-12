@@ -16,9 +16,6 @@ module SymDesc
        # and to ensure a correct simplification to the given inputs
     
     	class <<self
-
-            alias   :__new :new 
-            private :__new 
     
             # :call-seq:
             #   new(Integer)  -> SymDesc::Int
@@ -79,10 +76,11 @@ module SymDesc
                 	    	if num == 0
                 	    		ratio = Nan
                 	    	else
-                	    		ratio = Infinity
+                	    		ratio = Infinity 
                 	    	end
                 	    else
-                	    	ratio = __new(num,den)
+                            return ZERO if num == 0
+                	    	ratio = super(num,den)
                 	end
                 end
                 if ratio 
@@ -143,6 +141,8 @@ module SymDesc
                     break if v == Float::INFINITY
                     break if (n - n1/d1.to_f).abs < n * @@precision
                 end
+                #t = n.round
+                #return t,1 if (d1*t - n1/d1.to_f).abs < n * @@precision
                 return n1,d1
             end
     
