@@ -46,11 +46,14 @@ module SymDesc
         #
         # If `obj` is not a symbolic object, a conversion is attempted
         def +(b)
+            return self if b == 0
+            return Int.new(@value + b) if b.is_a? Integer
+            b = b.symdescfy
             return case b 
                 when Ratio, BinaryOp 
                     b + self
                 when Int 
-                    Number.new(value + b.value) 
+                    Int.new(@value + b.value) 
                 when Neg
                     self - b.argument 
                 else 
@@ -75,11 +78,14 @@ module SymDesc
         #
         # If `obj` is not a symbolic object, a conversion is attempted
         def -(b)
+            return self if b == 0
+            return Int.new(@value - b) if b.is_a? Integer
+            b = b.symdescfy
             return case b
                 when Ratio 
                     __sub_ratio b
                 when Int 
-                    Number.new(value - b.value)
+                    Int.new(value - b.value)
                 when Neg
                     self + b.argument 
                 else
