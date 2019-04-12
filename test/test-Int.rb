@@ -19,9 +19,21 @@ class TestInt < Test::Unit::TestCase
     end
 
     def test_sum
+    	r = Ratio.new 1,2
+    	assert (@i + r).is_a?(Ratio),"Sum between SymDesc::Int and SymDesc::Ratio failed"
+        i2 = Int.new 2
+        assert_equal (@i + i2), 7,   "Sum between Int and Int failed"
+        assert_equal (@i + 2), 7,    "Sum between Int and Integer failed"
+
+        i2 = -i2
+        assert_equal (@i + i2), 3,   "Sum between Int and -Int failed"
+        assert (@i + var(:x)).is_a?(Sum), "Sum betwen Int and other symbolic object failed"
     end
 
     def test_opt_sum
+    	i = Int.new 10
+    	assert (@i.opt_sum(i)).is_a? Int 
+    	assert_nil @i.opt_sum var(:x)
     end
 
     def test_sub
