@@ -11,8 +11,6 @@ module SymDesc
     class Int < Number
     
         class <<self
-            alias :__new :new
-            private :__new
     
             # :call-seq:
             #   new(i) -> new_int
@@ -22,10 +20,11 @@ module SymDesc
             def new(v)
                 raise ArgumentError, 
                         "Expected Integer argument but #{v.class} found" unless v.is_a? Integer
+                return ZERO if v.zero? && const_defined?(:ZERO)
                 if v < 0
-                    return Neg.new __new(v.abs)
+                    return Neg.new super v.abs
                 end
-                return __new(v)
+                return super v
             end
         end
     
@@ -116,7 +115,7 @@ module SymDesc
             if io
                 __io_append(io,value) 
             else
-                return value.to_s 
+                return @value.to_s 
             end
             io
         end
@@ -132,15 +131,19 @@ module SymDesc
         def ==(b)
             return case b 
                 when  Int
-                    value == b.value 
+                    @value == b.value 
                 when Numeric 
-                    value == b 
+                    @value == b 
                 else 
                     false 
             end 
         end
     
-    
+    protected
+
+        def get_size
+            @value.get_size
+        end
     
     private
     
