@@ -148,6 +148,16 @@ module SymDesc
     	end
 
     	alias :inspect :to_s
+
+    protected 
+
+        def get_size
+            extra = 1
+            if (@argument.is_a? Sum) || (@argument.is_a? Sub)
+                extra += 2
+            end
+            return @argument.get_size + extra 
+        end
     	
     	
     end

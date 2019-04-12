@@ -145,6 +145,12 @@ module SymDesc
         end
 
         alias :inspect :to_s
+
+    protected 
+
+        def get_size
+            return @name.size 
+        end
     
     private
         

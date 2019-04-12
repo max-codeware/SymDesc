@@ -272,6 +272,14 @@ module SymDesc
         end
 
         alias :inspect :to_s
+
+    protected
+
+        def get_size
+            return @numerator.get_size   + 
+                   @denominator.get_size + 
+                   1
+        end
     
     private
 

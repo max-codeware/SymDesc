@@ -1,8 +1,17 @@
 class Integer
 
+    L10 = Math.log(10)
+
     def to_symdesc
         return SymDesc::Int.new(self)
     end 
+
+protected
+    
+    def get_size
+        return 1 if self < 10
+        return (Math.log(self) / L10).to_i + 1
+    end
 
 end
 
