@@ -10,9 +10,13 @@ module SymDesc
     	end
 
         def ==(b)
-        	(self.class = b.class) && 
+        	(self.class == b.class) && 
         	(((left == b.left) && (right == b.right))  ||
         	((left  == b.right) && (right == b.left)))
+        end
+
+        def get_size # :nodoc:
+            return @left.get_size + @right.get_size + 3
         end
 
     protected 
@@ -23,6 +27,7 @@ module SymDesc
         def right=(b)
         	@right = right
         end
+
     end
 
 end
