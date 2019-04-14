@@ -144,9 +144,7 @@ module SymDesc
 
         alias :inspect :to_s
 
-    protected 
-
-        def get_size
+        def get_size # :nodoc:
             return @name.size 
         end
     

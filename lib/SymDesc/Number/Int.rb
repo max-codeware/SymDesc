@@ -138,10 +138,8 @@ module SymDesc
                     false 
             end 
         end
-    
-    protected
 
-        def get_size
+        def get_size # :nodoc:
             @value.get_size
         end
     

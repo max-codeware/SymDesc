@@ -133,7 +133,7 @@ module SymDesc
         # of the unary negation. If a StringIO object is passed, the string
         # representation is appended to the buffer and this last is returned.
     	def to_s(io = nil)
-            _io = io || StringIO.new
+            _io = io || __new_io(get_size)
             case argument
                 when Sum, Sub 
                     __io_append(_io,SUB_ID,"(",@argument,")")
@@ -149,9 +149,7 @@ module SymDesc
 
     	alias :inspect :to_s
 
-    protected 
-
-        def get_size
+        def get_size # :nodoc:
             extra = 1
             if (@argument.is_a? Sum) || (@argument.is_a? Sub)
                 extra += 2
