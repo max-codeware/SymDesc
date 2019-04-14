@@ -1,3 +1,5 @@
+if ENGINE.ruby?
+
 module Kernel
 	alias :_warn :warn
 
@@ -5,4 +7,6 @@ module Kernel
 		loc &&= "#{loc}: "
 		_warn "#{loc}warning: #{msg}\n"
 	end 
+end
+
 end
