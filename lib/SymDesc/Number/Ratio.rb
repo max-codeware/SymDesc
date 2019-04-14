@@ -168,12 +168,21 @@ module SymDesc
     
     	attr_reader :numerator
     	attr_reader :denominator
+
+if ENGINE.mruby?
     
     	def initialize(n,d)
+            @numerator   = n.to_i
+            @denominator = d.to_i
+            freeze
+    	end
+else
+        def initialize(n,d)
             @numerator   = n
             @denominator = d
             freeze
-    	end
+        end
+end
     
         # :call-seq:
         #   ratio + obj -> new_obj
