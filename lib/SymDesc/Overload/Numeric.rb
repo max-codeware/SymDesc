@@ -34,6 +34,5 @@ else
         class <<self
             undef_method :new
         end
-        freeze
-    end
+    end.freeze
 end
