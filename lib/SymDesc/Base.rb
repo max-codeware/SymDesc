@@ -5,6 +5,7 @@ module SymDesc::Base
     MUL_ID = "*"
     DIV_ID = "/"
     POW_ID = "**"
+    SPACE  = " "
 
 
     def is_symbolic?
