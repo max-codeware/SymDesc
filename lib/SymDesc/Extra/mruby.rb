@@ -20,8 +20,9 @@ module Kernel
 end
 
 class StringIO
-	def initialize
-		@buffer = ""
+	
+	def initialize(string = "")
+		@buffer = string
 		@closed = false
 	end
 
