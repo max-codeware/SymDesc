@@ -52,3 +52,5 @@ class StringIO
     	@buffer
     end
 end
+
+Integer = Fixnum
