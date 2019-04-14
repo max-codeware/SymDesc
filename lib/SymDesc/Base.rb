@@ -24,6 +24,7 @@ module SymDesc::Base
     end
 
 protected
+
     def __io_append(io,*args)
         raise ArgumentError, 
             "Expected StringIO (#{io.class}) found" unless io.is_a? StringIO
