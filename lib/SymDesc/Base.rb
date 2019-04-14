@@ -42,5 +42,17 @@ protected
             end
         end
     end
+
+if ENGINE.mruby?
+    def __new_io(size)
+        return StringIO.new String.buffer(size)
+    end
+
+else
+    def __new_io(size)
+        return StringIO.new String.new("",capacity: size)
+    end
+
+end
     
 end
