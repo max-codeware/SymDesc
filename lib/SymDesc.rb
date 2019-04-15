@@ -17,13 +17,13 @@ module SymDesc
 	class RecursionError < SystemStackError; end
 	class SymDescError   < StandardError   ; end
 
-	if Engine.mruby?
+	if ENGINE.mruby?
 		engine = :mruby
 	    if !Kernel.respond_to? :require 
 	    	raise SymDescError, "mrbgem-require not found for mruby. Please install it"
 	    end
 	    require File.expand_path("./SymDesc/Extra/mruby.rb",File.dirname(__FILE__))
-	elsif Engine.mruby?
+	elsif ENGINE.mruby?
 		engine = :ruby
 		require_relative "SymDesc/Extra/ruby.rb"
 	else
