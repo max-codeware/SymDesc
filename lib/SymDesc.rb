@@ -1,15 +1,29 @@
+module ENGINE
+	class <<self
+
+	    def ruby?
+	    	RUBY_ENGINE == "ruby"
+	    end
+
+	    def mruby?
+	    	RUBY_ENGINE == "mruby"
+	    end
+	end
+	freeze
+end
+
 module SymDesc
 	
 	class RecursionError < SystemStackError; end
 	class SymDescError   < StandardError   ; end
 
-	if RUBY_ENGINE == "mruby"
+	if Engine.mruby?
 		engine = :mruby
 	    if !Kernel.respond_to? :require 
 	    	raise SymDescError, "mrbgem-require not found for mruby. Please install it"
 	    end
 	    require File.expand_path("./SymDesc/Extra/mruby.rb",File.dirname(__FILE__))
-	elsif RUBY_ENGINE == "ruby"
+	elsif Engine.mruby?
 		engine = :ruby
 		require_relative "SymDesc/Extra/ruby.rb"
 	else
