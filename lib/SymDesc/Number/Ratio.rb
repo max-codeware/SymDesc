@@ -214,7 +214,7 @@ end
         end
     
         # :call-seq:
-        #   ratio + obj -> new_obj
+        #   ratio - obj -> new_obj
         #
         # Performs a symbolic subtraction between a symbolic rational
         # and `obj`, returning a new symbolic object if the operation
