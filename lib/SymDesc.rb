@@ -37,7 +37,6 @@ module SymDesc
 	}
 
 	%w|
-	       SymDesc/Extra/Engine_conf.rb
 	       SymDesc/Base.rb 
 	       SymDesc/Variable.rb 
 	       SymDesc/Neg.rb
