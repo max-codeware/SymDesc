@@ -23,7 +23,7 @@ module SymDesc
 	    	raise SymDescError, "mrbgem-require not found for mruby. Please install it"
 	    end
 	    require File.expand_path("./SymDesc/Extra/mruby.rb",File.dirname(__FILE__))
-	elsif ENGINE.mruby?
+	elsif ENGINE.ruby?
 		engine = :ruby
 		require_relative "SymDesc/Extra/ruby.rb"
 	else
