@@ -141,7 +141,7 @@ module SymDesc
                 elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
                     num,den   = __ratio_from_numeric2(n,d)
                 end
-                return num,den
+                num,den
             end
 
             def __num(n)
