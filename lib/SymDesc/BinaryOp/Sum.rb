@@ -12,14 +12,15 @@ module SymDesc
             def new(left,right)
             	return left if right == 0
             	return right if left == 0
+            	tmp = nil
             	if left.is_a?(Neg) && right.is_a?(Neg)
-            		return Neg.new super(left.argument,right.argument)
+            		tmp = Neg.new super(left.argument,right.argument)
                 elsif left.is_a? Neg
-                	return Sub.new(right,left.argument)
+                	tmp = Sub.new(right,left.argument)
                 elsif right.is_a? Neg
-                	return Sub.new(left,right.argument)
+                	tmp = Sub.new(left,right.argument)
                 end
-                return super(left,right)
+                return tmp || super(left,right)
             end		
     	end
 
@@ -34,13 +35,7 @@ module SymDesc
                 when Sub 
                 	self + b.left - b.right
                 else
-                	if (tmp = @left.opt_sum(b))
-                		Sum.new(tmp,@right)
-                	elsif (tmp = @right.opt_sum(b))
-                        Sum.new(@left,tmp)
-                    else
-                    	Sum.new(self,b)
-                    end
+                	__sum_else b
             end
     	end
 
@@ -66,5 +61,17 @@ module SymDesc
     	end
 
     	alias :inspect :to_s
+
+    private 
+
+        def __sum_else(b)
+        	if (tmp = @left.opt_sum(b))
+            	Sum.new(tmp,@right)
+            elsif (tmp = @right.opt_sum(b))
+                Sum.new(@left,tmp)
+            else
+            	Sum.new(self,b)
+            end
+        end
     end
 end

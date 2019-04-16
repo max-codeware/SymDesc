@@ -110,9 +110,7 @@ module SymDesc
     
             def __have_nan_or_infinity(*val)
                 val.each do |v|
-                    if v.is_a? Float
-                	    return true if v.nan? || v.infinite?
-                    end
+                    return true if (v.is_a? Float) && (v.nan? || v.infinite?)
                 end
                 false
             end

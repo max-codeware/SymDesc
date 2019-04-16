@@ -167,25 +167,26 @@ module SymDesc
         end
     
         def __sub_binaryop(b)
+            tmp = nil
             case b 
                 when Sum 
-                	return self - b.left - b.right
+                	tmp = self - b.left - b.right
                 when Sub 
-                	return self - b.left + b.right 
+                	tmp = self - b.left + b.right 
                 when Prod
                 	if b =~ self
                 		if (l = b.left) == 2
-                			return self
+                			tmp =  self
                 		end
-                		return Prod.new(ONE - l,self)
+                		tmp = Prod.new(ONE - l,self)
                 	end 
                 when Div 
                 	if b =~ self
                 		n = self * b.right - b.left
-                		return n / b.right
+                		tmp = n / b.right
                 	end
             end
-            return Sub.new(self,b)
+            return tmp || Sub.new(self,b)
         end
     
         def __sub_numeric(b)
