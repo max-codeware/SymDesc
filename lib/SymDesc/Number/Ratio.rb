@@ -69,7 +69,9 @@ module SymDesc
     
             def __have_nan_or_infinity(*val)
                 val.each do |v|
-                    return true if v.is_a?(Float) && (v.nan? || v.infinite?)
+                    if v.is_a? Float
+                	    return true if v.nan? || v.infinite?
+                    end
                 end
                 false
             end
@@ -122,40 +124,31 @@ module SymDesc
                 return a 
             end
 
-            def __make_n_d(n,d)
+            def __make_n_d(a,b)
                 if d 
-                    return __num_den(n,d)
+                    if  n < 0 || d < 0
+                        sign = true unless n < 0 && d < 0
+                        n    = n.abs 
+                        d    = d.abs
+                    end
+                    if (n.is_a? Integer) && (d.is_a? Integer)
+                        num,den = n,d
+                    elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
+                        num,den   = __ratio_from_numeric2(n,d)
+                    end
                 else
-                    return _num(n)
-                end
-            end
-
-            def __num_den(n,d)
-                if  n < 0 || d < 0
-                    sign = true unless n < 0 && d < 0
-                    n    = n.abs 
-                    d    = d.abs
-                end
-                if (n.is_a? Integer) && (d.is_a? Integer)
-                    num,den = n,d
-                elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
-                    num,den   = __ratio_from_numeric2(n,d)
-                end
-                num,den
-            end
-
-            def __num(n)
-                if n < 0
-                    sign = true
-                    n    = n.abs
-                end
-                case n 
-                    when Integer 
-                        num,den = n,1
-                    when Float 
-                        num,den = __ratio_from_numeric(n)
-                    when Rational 
-                        num,den = n.numerator,n.denominator
+                    if n < 0
+                        sign = true
+                        n    = n.abs
+                    end
+                    case n 
+                        when Integer 
+                            num,den = n,1
+                        when Float 
+                            num,den = __ratio_from_numeric(n)
+                        when Rational 
+                            num,den = n.numerator,n.denominator
+                    end
                 end
                 return num,den
             end
@@ -169,9 +162,14 @@ module SymDesc
                     when 1
                         ratio = num.symdescfy
                     when 0
-                        ratio = (num == 0) ? Nan : Infinity
+                        if num == 0
+                            ratio = Nan
+                        else
+                            ratio = Infinity 
+                        end
                     else
-                        ratio = (num == 0) ? ZERO : super(num,den)
+                        return ZERO if num == 0
+                        ratio = super(num,den)
                 end
                 return ratio
             end
