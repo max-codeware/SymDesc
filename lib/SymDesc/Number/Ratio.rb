@@ -39,50 +39,9 @@ module SymDesc
             	num   = den = ratio = nil
             	sign  = false
             	if !__have_nan_or_infinity(n,d)
-                    if d 
-                    	if  n < 0 || d < 0
-                    		sign = true unless n < 0 && d < 0
-                    	    n    = n.abs 
-                    	    d    = d.abs
-                    	end
-                        if (n.is_a? Integer) && (d.is_a? Integer)
-                        	num,den = n,d
-                        elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
-                        	num,den   = __ratio_from_numeric2(n,d)
-                        end
-                    else
-                    	if n < 0
-                    		sign = true
-                    	    n    = n.abs
-                    	end
-                        case n 
-                            when Integer 
-                            	num,den = n,1
-                            when Float 
-                            	num,den = __ratio_from_numeric(n)
-                            when Rational 
-                            	num,den = n.numerator,n.denominator
-                        end
-                    end
+                    num,den = __make_n_d(n,d)
                 end
-                if num && den
-                	m    = __mcd(num,den)
-                	num /= m 
-                	den /= m
-                	case den 
-                	    when 1
-                	    	ratio = num.symdescfy
-                	    when 0
-                	    	if num == 0
-                	    		ratio = Nan
-                	    	else
-                	    		ratio = Infinity 
-                	    	end
-                	    else
-                            return ZERO if num == 0
-                	    	ratio = super(num,den)
-                	end
-                end
+                ratio = __make_ratio(num,den)
                 if ratio 
                 	return Neg.new(ratio) if sign
                 	return ratio 
@@ -164,6 +123,57 @@ module SymDesc
                 end 
                 return a 
             end
+
+            def __make_n_d(a,b)
+                if d 
+                    if  n < 0 || d < 0
+                        sign = true unless n < 0 && d < 0
+                        n    = n.abs 
+                        d    = d.abs
+                    end
+                    if (n.is_a? Integer) && (d.is_a? Integer)
+                        num,den = n,d
+                    elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
+                        num,den   = __ratio_from_numeric2(n,d)
+                    end
+                else
+                    if n < 0
+                        sign = true
+                        n    = n.abs
+                    end
+                    case n 
+                        when Integer 
+                            num,den = n,1
+                        when Float 
+                            num,den = __ratio_from_numeric(n)
+                        when Rational 
+                            num,den = n.numerator,n.denominator
+                    end
+                end
+                return num,den
+            end
+
+            def __make_ratio(n,d)
+                return nil unless n && d 
+                m    = __mcd(num,den)
+                num /= m 
+                den /= m
+                case den 
+                    when 1
+                        ratio = num.symdescfy
+                    when 0
+                        if num == 0
+                            ratio = Nan
+                        else
+                            ratio = Infinity 
+                        end
+                    else
+                        return ZERO if num == 0
+                        ratio = super(num,den)
+                end
+                return ratio
+            end
+
     	end # End metaclass
     
     	attr_reader :numerator
