@@ -6,9 +6,14 @@ module SymDesc
     #  ___) | |_| | | | | | |
     # |____/ \__,_|_| |_| |_|
 
+    # This class represents a sum between two symbolic objects
     class Sum < BinaryOp
 
     	class <<self
+
+    		# Creates a new SymDesc::Sum given left and right value
+    		# that ase expected to be symbolic objects. Some simplification
+    		# is performed.
             def new(left,right)
             	return left if right == 0
             	return right if left == 0
@@ -24,6 +29,13 @@ module SymDesc
             end		
     	end
 
+        # :call-seq:
+        #   sum + obj -> new_obj
+        #
+        # It adds `obj` to `sum` returning
+        # a new symbolic object. Simplification is automatic.
+        #
+        # If `obj` is not a symbolic object, a conversion is attempted
     	def +(b)
     		return self if b == 0
     		b = b.symdescfy
@@ -50,6 +62,13 @@ module SymDesc
     		nil 
     	end
 
+        # :call-seq:
+        #   sum - obj -> new_obj
+        #
+        # It subtracts `obj` to `sum` returning
+        # a new symbolic object. Simplification is automatic.
+        #
+        # If `obj` is not a symbolic object, a conversion is attempted
     	def -(b)
     		return self if b == 0
     		b = b.symdescfy
@@ -76,6 +95,13 @@ module SymDesc
             nil
     	end
 
+        # :call-seq:
+        #   to_s -> string
+        #   to_s(str_io) -> str_io
+        #
+        # If no argument is provided, it returns a string representation
+        # of the symbolic sum. If a StringIO object is passed, the string
+        # representation is appended to the buffer and the buffer is returned. 
     	def to_s(io = nil)
     		_io = io || __new_io(get_size)
     		__io_append(_io,@left,SPACE,SUM_ID,SPACE,@right)
