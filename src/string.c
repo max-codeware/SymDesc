@@ -15,7 +15,7 @@ str_empty_with_capa(mrb_state *mrb, mrb_value self)
 void
 mrb_mruby_SymDesc_gem_init(mrb_state* mrb) {
   struct RClass *s = mrb->string_class;
-  mrb_define_class_method(mrb, s, "buffer", str_empty_with_capa, 1);
+  mrb_define_class_method(mrb, s, "buffer", str_empty_with_capa, MRB_ARGS_REQ(1));
 }
 
 void
