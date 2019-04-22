@@ -50,6 +50,32 @@ module SymDesc
     		nil 
     	end
 
+    	def -(b)
+    		return self if b == 0
+    		b = b.symdescfy
+            return case b
+                when Neg
+                    self + b.argument 
+                when Sum 
+                	self - b.left - b.right 
+                when Sub 
+                	self - b.left + b.right
+                else
+                	__sub_else b
+            end
+    	end
+
+    	def opt_sub(b) # :nodoc:
+            return self if b == 0
+            return ZERO if self == b 
+            if tmp = @left.opt_sub(b)
+            	return Sum.new(tmp,@right)
+            elsif tmp = @right.opt_sub(b)
+            	return Sum.new(@left,tmp)
+            end
+            nil
+    	end
+
     	def to_s(io = nil)
     		_io = io || __new_io(get_size)
     		__io_append(_io,@left,SPACE,SUM_ID,SPACE,@right)
@@ -68,6 +94,16 @@ module SymDesc
         	if (tmp = @left.opt_sum(b))
             	Sum.new(tmp,@right)
             elsif (tmp = @right.opt_sum(b))
+                Sum.new(@left,tmp)
+            else
+            	Sum.new(self,b)
+            end
+        end
+
+        def __sub_else(b)
+        	if (tmp = @left.opt_sub(b))
+            	Sum.new(tmp,@right)
+            elsif (tmp = @right.opt_sub(b))
                 Sum.new(@left,tmp)
             else
             	Sum.new(self,b)
