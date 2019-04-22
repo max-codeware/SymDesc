@@ -1,3 +1,12 @@
+#  ____                 
+# | __ )  __ _ ___  ___ 
+# |  _ \ / _` / __|/ _ \
+# | |_) | (_| \__ \  __/
+# |____/ \__,_|___/\___|
+
+# SymDesc::Base is the basic module included or extedned by
+# all the symbolic objects. It includes some basic methods and
+# constants common to all the objects or classes.
 module SymDesc::Base
     
     SUM_ID = "+"
@@ -8,11 +17,14 @@ module SymDesc::Base
     SPACE  = " "
 
 
+    # Returns always true. Every object that includes
+    # this module or class that extends SymDesc::Base is
+    # automatically considered as symbolic
     def is_symbolic?
         return true
     end
 
-    def =~(b)
+    def =~(b) # :nodoc:
    	    false 
    	end
 
@@ -25,6 +37,9 @@ module SymDesc::Base
 
 protected
 
+    # Method used as helper routine to append the string representation
+    # of symbolic objects to the buffer. This helps improving performances
+    # avoiding many allocations of little strings.
     def __io_append(io,*args)
         raise ArgumentError, 
             "Expected StringIO (#{io.class}) found" unless io.is_a? StringIO
@@ -44,13 +59,17 @@ protected
     end
 
 if ENGINE.mruby?
+
+    # Optimized string buffer for mruby engine
     def __new_io(size)
         return StringIO.new String.buffer(size)
     end
 
 else
+
+    # Optimized string buffer for ruby engine
     def __new_io(size)
-        return StringIO.new String.new("",capacity: size)
+        return StringIO.new String.new(capacity: size)
     end
 
 end
