@@ -5,8 +5,9 @@
 # |____/ \__,_|___/\___|
 
 # SymDesc::Base is the basic module included or extedned by
-# all the symbolic objects. It includes some basic methods and
-# constants common to all the objects or classes.
+# all the symbolic objects. It includes some basic methods,
+# constants and virtual methods that should be common 
+# to all the objects or classes.
 module SymDesc::Base
     
     SUM_ID = "+"
