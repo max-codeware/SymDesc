@@ -16,6 +16,7 @@ module SymDesc::Base
     DIV_ID = "/"
     POW_ID = "**"
     SPACE  = " "
+    VAR_ID = "@__vars__"
 
 
     # Returns always true. Every object that includes
