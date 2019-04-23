@@ -18,19 +18,23 @@ module SymDesc
             alias :__new :new 
             private :__new
 
+
+            VAR_ID = "@__vars__"
+            private_constant :VAR_ID
+
             def sym_config # :nodoc:
-                @sym_config
+                @@sym_config ||= (SYM_CONFIG[:var_scope] || :global)
             end
 
             def __new__(name,object) # :nodoc:
                 name = __var_name name
                 __ensure_config :local
                 if object.instance_variable_defined? VAR_ID
-                    v = obj.instance_variable_get VAR_ID 
+                    v = object.instance_variable_get VAR_ID 
                     var = v[name] || (v[name] = __new(name))
                 else
                     var = __new(name)
-                    obj.instance_variable_set VAR_ID, {name => var}
+                    object.instance_variable_set VAR_ID, {name => var}
                 end
                 return var
             end
