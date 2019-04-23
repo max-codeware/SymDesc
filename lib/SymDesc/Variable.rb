@@ -43,7 +43,7 @@ module SymDesc
                 name = __var_name name
                 __ensure_config :global
                 @@syms ||= {}
-                return @@sym[name] || (@@sym[name] = super(name))
+                return @@syms[name] || (@@syms[name] = super(name))
             end
 
         private 

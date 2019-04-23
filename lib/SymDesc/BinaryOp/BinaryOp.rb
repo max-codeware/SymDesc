@@ -18,7 +18,7 @@ module SymDesc
         # ensuring the passed arguments are of symboli type.
         def initialize(left,right)
             [left,right].each { |v| raise ArgumentError, 
-                "Expected symbolic object but #{v.class} found" unless v.is_symbiolic? }
+                "Expected symbolic object but #{v.class} found" unless v.is_symbolic? }
     		@left  = left
     		@right = right
     	end
