@@ -16,7 +16,6 @@ module SymDesc::Base
     DIV_ID = "/"
     POW_ID = "**"
     SPACE  = " "
-    VAR_ID = "@__vars__"
 
 
     # Returns always true. Every object that includes
@@ -35,6 +34,9 @@ module SymDesc::Base
             def #{name}(b)
                 raise NotImplementedError, \"Method `#{name}' for \#\{self.class\} not implemented yiet\"
             end"
+    end
+
+    for name in %w||
     end
 
 protected
