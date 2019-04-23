@@ -37,21 +37,11 @@ module SymDesc
 
             def new(name)
                 name = __var_name name
-                @@sym_config ||= (SYM_CONFIG[:var_scope] || :global)
-                if @@sym_config == :global
-                    @@syms ||= {}
-                    if s = @@syms[name]
-                        return s 
-                    else
-                        return @@syms[name] = super(name)
-                    end
-                else
-                    msg = "Warning: variable creation without a definition scope. Use `vars' method instead"
-                    loc = caller.first
-                    warn msg,loc
-                end
-                return super(name)
+                __ensure_config :global
+                @@syms ||= {}
+                return @@sym[name] || (@@sym[name] = super(name))
             end
+
         private 
 
             def __var_name(name)
@@ -66,14 +56,14 @@ module SymDesc
                 @@sym_config ||= (SYM_CONFIG[:var_scope] || :global)
                 case @@sym_config
                 when :local 
-                    raise SymDescError, 
-                    "Variable configuration set to local (requested #{type})" unless type == :local
-                when :global
-                    unless type == :global
+                    unless type == :local
                         msg = "Warning: variable creation without a definition scope. Use `vars' method instead"
                         loc = caller[1]
                         warn msg,loc
                     end
+                when :global
+                    raise SymDescError, 
+                    "Variable configuration set to global (requested #{type})" unless type == :global
                 else
                     raise SymDescError, "Invalid variable visibility configuration (got #{@@sym_config})"
                 end
