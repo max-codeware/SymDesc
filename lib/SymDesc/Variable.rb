@@ -15,12 +15,28 @@ module SymDesc
 
         class <<self 
 
-            def new(name)
-                if name.is_a? String
-                    name = name.to_sym
+            alias :__new :new 
+            private :__new
+
+            def sym_config # :nodoc:
+                @sym_config
+            end
+
+            def __new__(name,object) # :nodoc:
+                name = __var_name name
+                __ensure_config :local
+                if object.instance_variable_defined? VAR_ID
+                    v = obj.instance_variable_get VAR_ID 
+                    var = v[name] || (v[name] = __new(name))
+                else
+                    var = __new(name)
+                    obj.instance_variable_set VAR_ID, {name => var}
                 end
-                raise ArgumentError, 
-                     "A variable name must be a Symbol or a String" unless name.is_a? Symbol
+                return var
+            end
+
+            def new(name)
+                name = __var_name name
                 @@sym_config ||= (SYM_CONFIG[:var_scope] || :global)
                 if @@sym_config == :global
                     @@syms ||= {}
@@ -35,6 +51,32 @@ module SymDesc
                     warn msg,loc
                 end
                 return super(name)
+            end
+        private 
+
+            def __var_name(name)
+                name = name.to_sym if name.is_a? String
+                raise ArgumentError, 
+                     "A variable name must be a Symbol or a String" unless name.is_a? Symbol
+                return name
+            end
+
+
+            def __ensure_config(type)
+                @@sym_config ||= (SYM_CONFIG[:var_scope] || :global)
+                case @@sym_config
+                when :local 
+                    raise SymDescError, 
+                    "Variable configuration set to local (requested #{type})" unless type == :local
+                when :global
+                    unless type == :global
+                        msg = "Warning: variable creation without a definition scope. Use `vars' method instead"
+                        loc = caller[1]
+                        warn msg,loc
+                    end
+                else
+                    raise SymDescError, "Invalid variable visibility configuration (got #{@@sym_config})"
+                end
             end
         end
     
