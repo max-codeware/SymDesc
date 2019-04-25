@@ -59,6 +59,7 @@ class TestInt < Test::Unit::TestCase
         assert (@i == i), "Comparison berween SymDesc::Int(5) and SymDesc::Int(5) failed"
 
         assert (@i == 5),  "Comparison between SymDesc::Int(5) and 5 failed"
+        assert_false (@i == var(:x) )
     end
 
     def test_to_s
@@ -68,6 +69,12 @@ class TestInt < Test::Unit::TestCase
         io = StringIO.new
         @i.to_s(io).close
         assert_equal io.string, "5",  "String returned from to_s(io) doesn't match"
+    end
+
+    def test_get_size
+        int = Int.new 321
+        assert_equal @i.get_size, 1
+        assert_equal int.get_size,3
     end
 
 end
