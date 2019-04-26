@@ -50,6 +50,7 @@ module SymDesc
 	       SymDesc/BinaryOp/BinaryOp.rb
 	       SymDesc/BinaryOp/Sum.rb
 	       SymDesc/BinaryOp/Sub.rb
+	       SymDesc/BinaryOp/Prod.rb
 	  |.each do |file|
 		  require_relative file
 	  end
