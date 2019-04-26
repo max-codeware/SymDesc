@@ -55,18 +55,18 @@ module SymDesc
             b = b.symdescfy
     		return case b
     		    when Neg
-    		    	return argument - b.argument 
+    		    	-(@argument + b.argument) 
     		    else
-    		    	b - argument
+    		    	b - @argument
     		end
     	end
 
     	def opt_sum(b) # :nodoc:
-    		if argument.is_a? Neg
-    			tmp   = argument.opt_sum b.argument
+    		if b.is_a? Neg
+    			tmp   = @argument.opt_sum b.argument
                 tmp &&= -tmp
     		else
-    			tmp = b.opt_sub argument
+    			tmp = b.opt_sub @argument
     		end
     		tmp 
     	end
@@ -88,17 +88,17 @@ module SymDesc
             b = b.symdescfy
     		return case b
     		    when Neg
-    		    	 b.argument - argument
+    		    	 b.argument - @argument
     		    else
-    		    	-(argument + b)
+    		    	-(@argument + b)
     		end
     	end
 
     	def opt_sub(b) # :nodoc:
-    		if argument.is_a? Neg
-    			tmp   = b.argument.opt_sub argument
+    		if b.is_a? Neg
+    			tmp   = b.argument.opt_sub @argument
     		else
-    			tmp   = b.opt_sum argument
+    			tmp   = b.opt_sum @argument
     			tmp &&= -tmp
     		end
     		tmp 
@@ -111,7 +111,7 @@ module SymDesc
         # Since simplification is automatic it returns the
         # argument of `neg`
     	def -@
-    		argument 
+    		@argument 
     	end
 
         # :call-seq:
