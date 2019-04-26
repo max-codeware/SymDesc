@@ -1,6 +1,18 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=709090f1836237d9f74d71642192c3dad728084cafaeeb44a6f58241e758e471
+
 language: ruby
 
 rvm:
   - 2.4.0
 
+before_install:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 install: gem install rake simplecov colorize
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
