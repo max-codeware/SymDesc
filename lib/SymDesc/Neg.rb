@@ -18,8 +18,6 @@ module SymDesc
     	attr_reader :argument
 
     	class <<self
-    		alias   :__new :new 
-    		private :__new
 
             # Creates a new negated expression with automatic
             # simplification if necessary.
@@ -27,10 +25,9 @@ module SymDesc
             # a conversion is attempted.
     		def new(arg)
     			arg = arg.symdescfy
-    			if arg.is_a? Neg
-    				return arg.argument
-    			end
-    			return __new(arg)
+                return arg          if arg == 0
+    			return arg.argument if arg.is_a? Neg
+    			return super(arg)
     		end
     	end
 
