@@ -23,6 +23,10 @@ module SymDesc
     		@right = right
     	end
 
+        def -@
+            Neg.new self
+        end
+
         # :call-seq:
         #   self == obj
         # Returns true only if 'obj' represents the same operation
