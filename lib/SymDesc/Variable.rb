@@ -140,6 +140,10 @@ module SymDesc
     		nil 
     	end
 
+        def -@
+            return Neg.new(self)
+        end
+
         # :call-seq:
         #   var == obj -> true or false
         #
