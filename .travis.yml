@@ -3,4 +3,4 @@ language: ruby
 rvm:
   - 2.4.0
 
-install: gem install rake colorize
+install: gem install rake simplecov colorize
