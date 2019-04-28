@@ -215,14 +215,11 @@ module SymDesc
                 	tmp = self - b.left + b.right 
                 when Prod
                 	if b =~ self
-                		if (l = b.left) == 2
-                			tmp =  self
-                		end
-                		tmp = Prod.new(ONE - l,self)
+                		tmp =  (b.left == 2) ? self : Prod.new(ONE - l,self)
                 	end 
                 when Div 
                 	if b =~ self
-                		n = self * b.right - b.left
+                		n   = self * b.right - b.left
                 		tmp = n / b.right
                 	end
             end

@@ -16,16 +16,13 @@ module SymDesc
                 	    when 1
                 	    	ratio = num.symdescfy
                 	    when 0
-                	    	if num == 0
-                	    		ratio = Nan
-                	    	else
-                	    		ratio = Infinity 
-                	    	end
+                	    	ratio = (num == 0) ? Nan : Infinity
                 	    else
                             return ZERO if num == 0
                 	    	ratio = yield(num,den)
                 	end
                 end
+                return ratio
             end
 
         private
@@ -72,8 +69,7 @@ module SymDesc
                 @@precision ||= (SYM_CONFIG[:ratio_precision] || 1e-16)
                 if n.is_a? Integer
                 	return n,1
-                end
-                if n.is_a? Rational 
+                elsif n.is_a? Rational 
                 	return n.numerator,n.denominator
                 end
                 n1, n2 = 1,0
@@ -89,8 +85,7 @@ module SymDesc
                     d1  = v1 * d1 + d2 
                     d2  = tmp
                     v   = 1.0/(v - v1)
-                    break if v == Float::INFINITY
-                    break if (n - n1/d1.to_f).abs < n * @@precision
+                    break if ((n - n1/d1.to_f).abs < n * @@precision) || (v == Float::INFINITY)
                 end
                 #t = n.round
                 #return t,1 if (d1*t - n1/d1.to_f).abs < n * @@precision
