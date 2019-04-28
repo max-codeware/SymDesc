@@ -1,3 +1,4 @@
+require_relative "FloatConverter"
 
 module SymDesc
     #  ____       _   _       
@@ -35,57 +36,12 @@ module SymDesc
             #
             # No support for Float::INFINITY or Float::NAN
             def new(n,d = nil)
-            	__ensure_rationalizable(n,d)
-            	num   = den = ratio = nil
-            	sign  = false
+                __ensure_rationalizable(n,d)
             	if !__have_nan_or_infinity(n,d)
-                    if d 
-                    	if  n < 0 || d < 0
-                    		sign = true unless n < 0 && d < 0
-                    	    n    = n.abs 
-                    	    d    = d.abs
-                    	end
-                        if (n.is_a? Integer) && (d.is_a? Integer)
-                        	num,den = n,d
-                        elsif (n.is_a? Float) || (d.is_a? Float) || (n.is_a? Rational) || (d.is_a? Rational)
-                        	num,den   = __ratio_from_numeric2(n,d)
-                        end
-                    else
-                    	if n < 0
-                    		sign = true
-                    	    n    = n.abs
-                    	end
-                        case n 
-                            when Integer 
-                            	num,den = n,1
-                            when Float 
-                            	num,den = __ratio_from_numeric(n)
-                            when Rational 
-                            	num,den = n.numerator,n.denominator
-                        end
-                    end
+                    sign,num,den = FloatConverter.float_to_ratio_ary(n,d)
                 end
-                if num && den
-                	m    = __mcd(num,den)
-                	num /= m 
-                	den /= m
-                	case den 
-                	    when 1
-                	    	ratio = num.symdescfy
-                	    when 0
-                	    	if num == 0
-                	    		ratio = Nan
-                	    	else
-                	    		ratio = Infinity 
-                	    	end
-                	    else
-                            return ZERO if num == 0
-                	    	ratio = super(num,den)
-                	end
-                end
-                if ratio 
-                	return Neg.new(ratio) if sign
-                	return ratio 
+                if ratio = FloatConverter.ratio_to_sd_ratio(num,den) { |n,d| super(n,d) }
+                	return sign ? Neg.new(ratio) : ratio
                 end
                 raise NotImplementedError, 
                     "Symbolic rationals for \
