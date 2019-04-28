@@ -53,4 +53,10 @@ class StringIO
     end
 end
 
+unless self.class.respond_to? :private_constant
+    class Module
+        def private_constant(*names); end
+    end
+end
+
 Integer = Fixnum
