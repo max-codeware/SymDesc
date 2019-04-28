@@ -61,10 +61,6 @@ module SymDesc
                 return sign,num,den
             end
 
-            def float2ratio2(n,d)
-
-            end
-
             def __ratio_from_numeric(n)
                 @@precision ||= (SYM_CONFIG[:ratio_precision] || 1e-16)
                 if n.is_a? Integer
