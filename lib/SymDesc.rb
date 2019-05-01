@@ -48,9 +48,11 @@ module SymDesc
 	       SymDesc/Number/Int.rb 
 	       SymDesc/Number/Ratio.rb
 	       SymDesc/BinaryOp/BinaryOp.rb
+	       SymDesc/BinaryOp/Addition.rb
 	       SymDesc/BinaryOp/Sum.rb
 	       SymDesc/BinaryOp/Sub.rb
 	       SymDesc/BinaryOp/Prod.rb
+	       SymDesc/BinaryOp/Div.rb
 	  |.each do |file|
 		  require_relative file
 	  end
