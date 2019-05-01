@@ -23,6 +23,25 @@ class TestSum < Test::Unit::TestCase
     end
 
     def test_sum
+    	num  = 3.to_symdesc
+    	_num = -num
+    	res  = Sub.new(@sum,num)
+    	assert_equal @sum + _num,res 
+
+    	k   = var :k
+    	sum = k + num
+    	res = Sum.new Sum.new(Sum.new(@x,@y),k), num
+        assert_equal @sum + sum,res 
+
+        sub = k - num 
+        res = Sub.new Sum.new(Sum.new(@x,@y),k), num
+        assert_equal @sum + sub, res
+
+        # res = Sum.new Prod.new(TWO,@x), @y 
+        # assert_equal @sum + @x, res 
+
+        # res = Sum.new @x, Prod.new(TWO,@y)
+        # assert_equal @sum + @y, res
     end
 
     def test_opt_sum
