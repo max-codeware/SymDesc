@@ -29,71 +29,9 @@ module SymDesc
             end		
     	end
 
-        # :call-seq:
-        #   sum + obj -> new_obj
-        #
-        # It adds `obj` to `sum` returning
-        # a new symbolic object. Simplification is automatic.
-        #
-        # If `obj` is not a symbolic object, a conversion is attempted
-    	def +(b)
-    		return self if b == 0
-    		b = b.symdescfy
-            return case b
-                when Neg
-                    self - b.argument 
-                when Sum 
-                	self + b.left + b.right 
-                when Sub 
-                	self + b.left - b.right
-                else
-                	__sum_else b
-            end
-    	end
-
-    	def opt_sum(b) # :nodoc:
-    		return self if b == 0
-    		return Prod.new(TWO,self) if self == b 
-    		if tmp = @left.opt_sum(b) 
-    			return Sum.new(tmp,@right)
-    		elsif tmp = @right.opt_sum(b) 
-    			return Sum.new(@left,tmp)
-    		end
-    		nil 
-    	end
-
-        # :call-seq:
-        #   sum - obj -> new_obj
-        #
-        # It subtracts `obj` to `sum` returning
-        # a new symbolic object. Simplification is automatic.
-        #
-        # If `obj` is not a symbolic object, a conversion is attempted
-    	def -(b)
-    		return self if b == 0
-    		b = b.symdescfy
-            return case b
-                when Neg
-                    self + b.argument 
-                when Sum 
-                	self - b.left - b.right 
-                when Sub 
-                	self - b.left + b.right
-                else
-                	__sub_else b
-            end
-    	end
-
-    	def opt_sub(b) # :nodoc:
-            return self if b == 0
-            return ZERO if self == b 
-            if tmp = @left.opt_sub(b)
-            	return Sum.new(tmp,@right)
-            elsif tmp = @right.opt_sub(b)
-            	return Sum.new(@left,tmp)
-            end
-            nil
-    	end
+        def -@
+            return Neg.new self
+        end
 
         # :call-seq:
         #   to_s -> string
