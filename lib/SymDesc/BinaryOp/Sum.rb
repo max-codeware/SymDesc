@@ -6,8 +6,11 @@ module SymDesc
     #  ___) | |_| | | | | | |
     # |____/ \__,_|_| |_| |_|
 
-    # This class represents a sum between two symbolic objects
+    # This class represents a sum between two symbolic objects.
     class Sum < BinaryOp
+
+        include Addition
+        OP = :+
 
     	class <<self
 
