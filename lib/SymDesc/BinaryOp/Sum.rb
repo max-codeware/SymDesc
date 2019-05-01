@@ -59,9 +59,9 @@ module SymDesc
 
         def __sum_else(b)
         	if (tmp = @left.opt_sum(b))
-            	Sum.new(tmp,@right)
+            	tmp + @right
             elsif (tmp = @right.opt_sum(b))
-                Sum.new(@left,tmp)
+                @left + tmp
             else
             	Sum.new(self,b)
             end
@@ -69,11 +69,11 @@ module SymDesc
 
         def __sub_else(b)
         	if (tmp = @left.opt_sub(b))
-            	Sum.new(tmp,@right)
+            	tmp + @right
             elsif (tmp = @right.opt_sub(b))
-                Sum.new(@left,tmp)
+                @left + tmp
             else
-            	Sum.new(self,b)
+            	Sub.new(self,b)
             end
         end
     end

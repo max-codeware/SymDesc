@@ -18,8 +18,7 @@ module SymDesc
                 	    when 0
                 	    	ratio = (num == 0) ? Nan : Infinity
                 	    else
-                            return ZERO if num == 0
-                	    	ratio = yield(num,den)
+                	    	ratio = (num == 0) ? ZERO : yield(num,den)
                 	end
                 end
                 return ratio

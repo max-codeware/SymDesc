@@ -105,6 +105,7 @@ module SymDesc
     	end
     
     	def opt_sum(b) # :nodoc:
+            return self if b == 0
             if self == b 
             	return Prod.new(TWO,self)
             end
@@ -136,6 +137,7 @@ module SymDesc
     	end
     
     	def opt_sub(b) # :nodoc:
+            return self if b == 0
     		return self - b if self =~ b
     		nil 
     	end
