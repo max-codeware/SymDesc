@@ -77,13 +77,13 @@ module SymDesc
 
 if ENGINE.mruby?
     
-    	def initialize(n,d)
+    	def initialize(n,d) # :nodoc:
             @numerator   = n.to_i
             @denominator = d.to_i
             freeze
     	end
 else
-        def initialize(n,d)
+        def initialize(n,d) # :nodoc:
             @numerator   = n
             @denominator = d
             freeze
