@@ -161,7 +161,7 @@ module SymDesc
     
                 when Variable
         	        self == b 
-        	    when Product, Div
+        	    when Prod, Div
         	    	b =~ self 
         	    else 
         	    	false

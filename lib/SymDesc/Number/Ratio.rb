@@ -45,7 +45,7 @@ module SymDesc
                 end
                 raise NotImplementedError, 
                     "Symbolic rationals for \
-                        #{n}" << (d ? " and #{d} " : " " << "not implemented yet")
+                        #{n}" << (d ? " and #{d} " : " ") << "not implemented yet"
             end
     
         private 
