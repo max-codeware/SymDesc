@@ -45,6 +45,15 @@ class TestSum < Test::Unit::TestCase
     end
 
     def test_opt_sum
+        res = Sum.new Prod.new(TWO,@x), @y
+        assert_equal @sum.opt_sum(@x), res
+
+        res = Sum.new @x, Prod.new(TWO,@y)
+        assert_equal @sum.opt_sum(@y), res
+
+        k = var :k
+
+        assert_nil @sum.opt_sum k
     end
 
     def test_sub
