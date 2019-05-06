@@ -31,9 +31,9 @@ module SymDesc
     		return self if b == 0
     		return Prod.new(TWO,self) if self == b 
     		if tmp = @left.opt_sum(b) 
-    		    tmp.send OP,@right
+    		    tmp.send self.class::OP,@right
     		elsif tmp = @right.opt_sum(b) 
-    			@left.send OP, tmp
+    			@left.send self.class::OP, tmp
     		else 
     		    nil 
     		end
@@ -65,9 +65,9 @@ module SymDesc
             return self if b == 0
             return ZERO if self == b 
             if tmp = @left.opt_sub(b)
-            	tmp.send OP,@right
+            	tmp.send self.class::OP,@right
             elsif tmp = @right.opt_sub(b)
-            	@left.send OP, tmp
+            	@left.send self.class::OP, tmp
             else
                 nil
             end
