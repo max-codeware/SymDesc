@@ -70,10 +70,10 @@ module SymDesc
 
         def get_size # :nodoc:
             size = @left.get_size + 
-                  (@left.is_a?(Prod) ? 0 : 2
+                  (@left.is_a?(Prod) ? 0 : 2)
             size += 3
             size += @right.get_size + 
-                   (@right.is_a?(Prod) ? 0 : 2
+                   (@right.is_a?(Prod) ? 0 : 2)
             return size 
         end
 
@@ -92,7 +92,7 @@ module SymDesc
         end
 
         def __sum_prod_div(b)
-        	return Sum.new (self,b) unless self =~ b
+        	return Sum.new(self,b) unless self =~ b
         	return case b
         	when Prod 
         		(@left + b.left) * (@right)
@@ -111,7 +111,7 @@ module SymDesc
         end
 
         def __sub_prod_div(b)
-        	return Sub.new (self,b) unless self =~ b
+        	return Sub.new(self,b) unless self =~ b
         	return case b
         	when Prod 
         		(@left - b.left) * (@right)
