@@ -1,5 +1,5 @@
 class Symbol
 	def to_symdesc
-	    return SymDesc::Variable.new(self)
+	    return var self
 	end	
 end
