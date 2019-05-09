@@ -26,33 +26,105 @@ module SymDesc
         end
 
         def opt_sum(b) #:nodoc:
+        	return self =~ b ? (self + b) : nil
         end
 
         def -(b)
+        	return ZERO if self == b 
+        	b = b.symdescfy
+        	return case b 
+        	when Variable 
+        		__sub_variable b
+        	when Prod, Div 
+        		__sub_prod_var b
+        	else
+        		__sub_else b
+        	end
         end
 
         def opt_sub(b) # :nodoc:
+        	return self =~ b ? (self - b) : nil
         end
 
         def to_s(io = nil)
+        	_io = io || __new_io(get_size)
+        	__prod_append(_io,@left)
+        	__io_append(_io,SPACE,MUL_ID,SPACE)
+            __prod_append(_io,@right)
+            return io ? io : (_io.close; _io.string)
         end
 
         def =~(b) # :nodoc:
-        	return (@left.is_a? Number) && (@right == b)
+        	return false unless (@left.is_a? Number)
+        	return case b 
+        	when Variable
+        		(@right == b)
+        	when Prod
+        		(b.left.is_a? Number) && (@right == b.right)
+        	when Div 
+        		(@right == b.left) && (b.right.is_a? Number)
+        	else
+        		@right == b 
+        	end
+        end
+
+        def get_size # :nodoc:
+            size = @left.get_size + 
+                  (@left.is_a?(Prod) ? 0 : 2
+            size += 3
+            size += @right.get_size + 
+                   (@right.is_a?(Prod) ? 0 : 2
+            return size 
         end
 
     private
+
+        def __prod_append(io,branch)
+        	unless branch.is_a? Prod 
+        		__io_append(io,LPAR,@left,RPAR)
+        	else
+        		__io_append(io,@left)
+        	end
+        end
 
         def __sum_variable(b)
             return self =~ b ? (Prod.new(@left + 1, @right)) : Sum.new(self,b)
         end
 
         def __sum_prod_div(b)
+        	return Sum.new (self,b) unless self =~ b
+        	return case b
+        	when Prod 
+        		(@left + b.left) * (@right)
+        	when div 
+                (@left / b.right) * @right
+            end
         end
 
-        def __sum_else(b)
-            return self =~ b ? (Prod.new(@left + 1, @right)) : Sum.new(self,b)
+        alias :__sum_else :__sum_variable
+        # def __sum_else(b)
+        #     return self =~ b ? (Prod.new(@left + 1, @right)) : Sum.new(self,b)
+        # end
+
+        def __sub_variable(b)
+            return self =~ b ? (@left - 1 * @right) : Sub.new(self,b)
         end
+
+        def __sub_prod_div(b)
+        	return Sub.new (self,b) unless self =~ b
+        	return case b
+        	when Prod 
+        		(@left - b.left) * (@right)
+        	when Div 
+        		r = bright
+                Ratio.new(@left * r - 1,r) * @right
+            end
+        end
+        
+        alias :__sum_else :__sum_variable
+        # def __sub_else(b)
+        #     return self =~ b ? (@left - 1, @right) : Sub.new(self,b)
+        # end
 
     end
 
