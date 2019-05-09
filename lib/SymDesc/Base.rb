@@ -16,6 +16,8 @@ module SymDesc::Base
     DIV_ID = "/"
     POW_ID = "**"
     SPACE  = " "
+    LPAR   = "("
+    RPAR   = ")"
 
 
     # Returns always true. Every object that includes
