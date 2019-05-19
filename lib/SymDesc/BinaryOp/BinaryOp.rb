@@ -29,6 +29,7 @@ module SymDesc
     # |____/|_|_| |_|\__,_|_|   \__, |\___/| .__/ 
     #                           |___/      |_| 
 
+    ##
     # This class represents a generic binary operation and it is inherited
     # by the main algebric operations
     class BinaryOp
@@ -36,7 +37,8 @@ module SymDesc
 
         attr_reader :left,:right
 
-    	# It creates and initializes a new instance of binary operation
+    	##
+        # It creates and initializes a new instance of binary operation
         # ensuring the passed arguments are of symboli type.
         def initialize(left,right)
             [left,right].each { |v| raise ArgumentError, 
@@ -49,6 +51,7 @@ module SymDesc
             Neg.new self
         end
 
+        ##
         # :call-seq:
         #   self == obj
         # Returns true only if 'obj' represents the same operation

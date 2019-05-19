@@ -28,6 +28,7 @@ module SymDesc
     #  ___) | |_| | | | | | |
     # |____/ \__,_|_| |_| |_|
 
+    ##
     # This class represents a sum between two symbolic objects.
     class Sum < BinaryOp
 
@@ -36,7 +37,8 @@ module SymDesc
 
     	class <<self
 
-    		# Creates a new SymDesc::Sum given left and right value
+    		##
+            # Creates a new SymDesc::Sum given left and right value
     		# that ase expected to be symbolic objects. Some simplification
     		# is performed.
             def new(left,right)
@@ -58,6 +60,7 @@ module SymDesc
             return Neg.new self
         end
 
+        ##
         # :call-seq:
         #   to_s -> string
         #   to_s(str_io) -> str_io

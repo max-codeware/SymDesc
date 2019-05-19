@@ -58,6 +58,7 @@ module SymDesc
             freeze
         end
     
+        ##
         # :call-seq:
         #   int + obj -> new_obj
         #
@@ -90,6 +91,7 @@ module SymDesc
             nil
         end
     
+        ##
         # :call-seq:
         #   int - obj -> new_obj
         #
@@ -122,11 +124,13 @@ module SymDesc
             nil
         end
     
+        ##
         # Returns SymDesc::Int negated (wrapped in SymDesc::Neg class)
         def -@
             Neg.new(self)
         end
     
+        ##
         # :call-seq:
         #   to_s -> string
         #   to_s(str_io) -> str_io
@@ -145,6 +149,7 @@ module SymDesc
 
         alias :inspect :to_s
     
+        ##
         # :call-seq:
         #    int == obj -> true or false
         #

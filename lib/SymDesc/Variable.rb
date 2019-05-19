@@ -28,6 +28,7 @@ module SymDesc
     #   \ V / (_| | |  | | (_| | |_) | |  __/
     #    \_/ \__,_|_|  |_|\__,_|_.__/|_|\___|
 
+    ##
     # This class describes a symbolic variable. It can be resolved
     # with a numerical value or substituted with another expression.
     class Variable

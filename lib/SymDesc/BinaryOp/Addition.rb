@@ -22,12 +22,14 @@
 
 module SymDesc
     
+    ##
     # This module contains the methods for
     # addition and subtraction operations
     # for SymDesc::Sum and SymDesc::Sub classes- 
     module Addition
 
-    	# :call-seq:
+    	##
+        # :call-seq:
         #   op + obj -> new_obj
         #
         # It adds `obj` to `op` returning
@@ -61,7 +63,8 @@ module SymDesc
     		end
     	end
 
-    	# :call-seq:
+    	##
+        # :call-seq:
         #   op - obj -> new_obj
         #
         # It subtracts `obj` to `op` returning

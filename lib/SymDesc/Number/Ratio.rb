@@ -29,6 +29,7 @@ module SymDesc
     # |  _ < (_| | |_| | (_) |
     # |_| \_\__,_|\__|_|\___/ 
     
+    ##
     # Ratio is a representation of a rational number
     # in a symbolic form. This allows to express numeric
     # fractions with an infinite precision, as well as 
@@ -40,6 +41,7 @@ module SymDesc
     
     	class <<self
     
+            ##
             # :call-seq:
             #   new(Integer)  -> SymDesc::Int
             #   new(Float)    -> SymDesc::Ratio
@@ -112,6 +114,7 @@ else
         end
 end
     
+        ##
         # :call-seq:
         #   ratio + obj -> new_obj
         #
@@ -141,6 +144,7 @@ end
             nil
         end
     
+        ##
         # :call-seq:
         #   ratio - obj -> new_obj
         #
@@ -170,11 +174,13 @@ end
             nil
         end
     
+        ##
         # Returns SymDesc::Ratio negated (wrapped in SymDesc::Neg class)
         def -@
             return Neg.new self
         end
     
+        ##
         # :call-seq:
         #    ratio == obj -> true or false
         #
@@ -192,6 +198,7 @@ end
             end
         end
     
+        ##
         # :call-seq:
         #   to_s -> string
         #   to_s(str_io) -> str_io

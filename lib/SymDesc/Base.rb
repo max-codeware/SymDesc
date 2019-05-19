@@ -43,6 +43,7 @@ module SymDesc::Base
     RPAR   = ")"
 
 
+    ##
     # Returns always true. Every object that includes
     # this module or class that extends SymDesc::Base is
     # automatically considered as symbolic
@@ -66,6 +67,7 @@ module SymDesc::Base
 
 protected
 
+    ##
     # Method used as helper routine to append the string representation
     # of symbolic objects to the buffer. This helps improving performances
     # avoiding many allocations of little strings.
@@ -89,6 +91,7 @@ protected
 
 if ENGINE.mruby?
 
+    ##
     # Optimized string buffer for mruby engine
     def __new_io(size)
         return StringIO.new String.buffer(size)
@@ -96,6 +99,7 @@ if ENGINE.mruby?
 
 else
 
+    ##
     # Optimized string buffer for ruby engine
     def __new_io(size)
         return StringIO.new String.new(capacity: size)

@@ -29,6 +29,7 @@ module SymDesc
     # |_| \_|\___|\__, |
     #             |___/ 
 
+    ##
     # This class represents the unary negation of a symbolic
     # object. It simply wraps a symbolic expression and manipulates
     # it accurding to unary negation.
@@ -40,6 +41,7 @@ module SymDesc
 
     	class <<self
 
+            ##
             # Creates a new negated expression with automatic
             # simplification if necessary.
             # If the passed object is not a symbolic one,
@@ -56,6 +58,7 @@ module SymDesc
     		@argument = argument
     	end
 
+        ##
         # :call-seq:
         #   neg + obj -> new_obj
         #
@@ -89,6 +92,7 @@ module SymDesc
     		tmp 
     	end
 
+        ##
         # :call-seq:
         #   neg  obj -> new_obj
         #
@@ -122,6 +126,7 @@ module SymDesc
     		tmp 
     	end
 
+        ##
         # :call-seq:
         #   -neg -> argument
         #
@@ -132,6 +137,7 @@ module SymDesc
     		@argument 
     	end
 
+        ##
         # :call-seq:
         #   `neg` == `obj`
         #
@@ -143,6 +149,7 @@ module SymDesc
     		false
     	end
 
+        ##
         # :call-seq:
         #   to_s -> string
         #   to_s(str_io) -> str_io
