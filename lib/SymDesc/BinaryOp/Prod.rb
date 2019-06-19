@@ -101,10 +101,10 @@ module SymDesc
     private
 
         def __prod_append(io,branch)
-        	unless branch.is_a? Prod 
-        		__io_append(io,LPAR,@left,RPAR)
+        	unless (branch.is_a? Prod) && !(branch.is_a? BinaryOp)
+        		__io_append(io,LPAR,branch,RPAR)
         	else
-        		__io_append(io,@left)
+        		__io_append(io,branch)
         	end
         end
 

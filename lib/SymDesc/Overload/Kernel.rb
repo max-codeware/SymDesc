@@ -22,7 +22,7 @@
 
 module Kernel
     def var(*args)
-    	if Variable.sym_config == :global
+    	if SymDesc::Variable.sym_config == :global
     	    args.map! { |name| SymDesc::Variable.new name          }
     	else
     		args.map! { |name| SymDesc::Variable.__new__ name,self }
