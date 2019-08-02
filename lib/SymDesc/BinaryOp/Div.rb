@@ -27,25 +27,99 @@ module SymDesc
         end
 
         def +(b)
+        	return self if b == 0
+        	b = b.symdescfy
+        	return case b
+        	when Neg
+        		return self - b.argument
+        	when Prod 
+        		__sum_prod b 
+        	when Div
+        		__sum_div b
+        	# when Power
+        	else
+        		__sum_else b
+        	end
         end
 
         def opt_sum(b) # :nodoc:
         end
 
         def -(b)
+        	return self if b == 0
+        	b = b.symdescfy
+        	return case b
+        	when Neg
+        		return self + b.argument
+        	when Prod 
+        		__sub_prod b 
+        	when Div
+        		__sub_div b
+        	# when Power
+        	else
+        		__sub_else b
+        	end	
         end
 
         def opt_sub(b) # :nodoc:
         end
 
+        
         def -@
+        	return Neg.new(self)
         end
 
         def get_size # :nodoc:
+        	size = @left.get_size + 
+                  (@left.is_a?(Sum) || @left.is_a?(Sub) ? 0 : 2)
+            size += 3
+            size += @right.get_size + 
+                   (@right.is_a?(BinaryOp) ? 0 : 2)
+            return size 
         end
 
         def to_s(io = nil)
+        	_io = io || __new_io(get_size)
+        	__op_append(io,@left)
+        	__io_append(_io,SPACE,DIV_ID,SPACE)
+            __op_append(io,@right)
+            return io ? io : (_io.close; _io.string)
         end
 	end
+
+private
+
+    def __op_append(io,branch,kind)
+        case kind 
+        when :l 
+        	branch.is_a?(Sum) || branch.is_a?(Sub) ? 
+        	    __io_append(io,LPAR,branch,RPAR) :
+        	    __io_append(io,branch)
+        when :r 
+        	branch.is_a?(BinaryOp) ? 
+        	    __io_append(io,LPAR,branch,RPAR) :
+        	    __io_append(io,branch)
+        else
+        	Raise Bug,"Unknown branch type #{kind}"
+        end
+    end
+
+    def __sum_prod(b)
+    end
+
+    def __sum_div(b)
+    end
+
+    def __sum_else(b)
+    end
+
+    def __sub_prod(b)
+    end
+
+    def __sub_div(b)
+    end
+
+    def __sub_else(b)
+    end
 
 end
