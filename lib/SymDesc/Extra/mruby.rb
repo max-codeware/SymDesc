@@ -22,13 +22,17 @@
 
 module Kernel
 	unless respond_to? :require_relative
-	    def require_relative(file)
-	    	filename = caller.first
-	    	while filename[-1] != ':'
-	    		filename.chop!
-	    	end
-	    	filename.chop!
-	    	filename = File.expand_path filename
+	    def require_relative(file,path = nil)
+            filename = nil
+            unless path
+	    	  filename = caller.first
+	    	  while filename[-1] != ':'
+	    	  	filename.chop!
+	    	  end
+	    	  filename.chop!
+	    	  filename = File.expand_path filename
+            end
+            filename ||= path 
 	        require File.expand_path(file,File.dirname(filename))
 	    end
 	end
