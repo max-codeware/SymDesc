@@ -67,6 +67,10 @@ module SymDesc
         	return self =~ b ? (self - b) : nil
         end
 
+        def -@
+            return Neg.new(self)
+        end
+
         def to_s(io = nil)
         	_io = io || __new_io(get_size)
         	__prod_append(_io,@left)
