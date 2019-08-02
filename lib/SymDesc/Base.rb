@@ -42,6 +42,8 @@ module SymDesc::Base
     LPAR   = "("
     RPAR   = ")"
 
+    class Bug < StandardError; end
+
 
     ##
     # Returns always true. Every object that includes
