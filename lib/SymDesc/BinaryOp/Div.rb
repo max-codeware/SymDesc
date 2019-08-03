@@ -32,8 +32,6 @@ module SymDesc
         	return case b
         	when Neg
         		return self - b.argument
-        	when Prod 
-        		__sum_prod b 
         	when Div
         		__sum_div b
         	# when Power
@@ -43,6 +41,14 @@ module SymDesc
         end
 
         def opt_sum(b) # :nodoc:
+            return case b
+            when 0
+                self 
+            when self 
+                self * Two 
+            else
+                nil 
+            end
         end
 
         def -(b)
@@ -51,8 +57,6 @@ module SymDesc
         	return case b
         	when Neg
         		return self + b.argument
-        	when Prod 
-        		__sub_prod b 
         	when Div
         		__sub_div b
         	# when Power
@@ -62,8 +66,15 @@ module SymDesc
         end
 
         def opt_sub(b) # :nodoc:
+            return case b
+            when 0
+                self 
+            when self 
+                ZERO
+            else
+                nil 
+            end
         end
-
         
         def -@
         	return Neg.new(self)
@@ -80,9 +91,9 @@ module SymDesc
 
         def to_s(io = nil)
         	_io = io || __new_io(get_size)
-        	__op_append(io,@left)
+        	__op_append(io,@left,:l)
         	__io_append(_io,SPACE,DIV_ID,SPACE)
-            __op_append(io,@right)
+            __op_append(io,@right,:r)
             return io ? io : (_io.close; _io.string)
         end
 	end
@@ -100,26 +111,28 @@ private
         	    __io_append(io,LPAR,branch,RPAR) :
         	    __io_append(io,branch)
         else
-        	Raise Bug,"Unknown branch type #{kind}"
+        	raise Bug,"Unknown branch type #{kind}"
         end
     end
 
-    def __sum_prod(b)
-    end
-
     def __sum_div(b)
+        return self * TWO if self == b 
+        return (@left * b.right + b.left * @right) / @right * b.right
     end
 
     def __sum_else(b)
-    end
-
-    def __sub_prod(b)
+        # return Nan if b.nan?
+        return Sum.new(self,b)  
     end
 
     def __sub_div(b)
+        return ZERO if self == b 
+        return (@left * b.right - b.left * @right) / @right * b.right
     end
 
     def __sub_else(b)
+        # return Nan if b.nan?
+        return Sub.new(self,b)  
     end
 
 end
