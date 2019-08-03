@@ -102,6 +102,13 @@ module SymDesc
             return size 
         end
 
+        # Returns true if the formact of the product is in
+        # the form `n * v` where `n` is a number and `v` a
+        # symbolic variable
+        def nv_form?
+            (@left.is_a?(Number) && @right.is_a?(Variable))
+        end
+
     private
 
         def __prod_append(io,branch)
