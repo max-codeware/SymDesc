@@ -30,7 +30,7 @@ module SymDesc
   		when 0
   			self 
   		when self
-  			@left == 2 ? return @left ** (@right + 1)
+  			@left == 2 ? @left ** (@right + 1) : Prod.new(TWO,self)
   		else
   			return Sum.new(self,b)
   		end
