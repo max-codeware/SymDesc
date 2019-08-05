@@ -83,6 +83,14 @@ module SymDesc
             	end
             end
 
+            def -@
+                Neg.new(self)
+            end
+
+            def get_size # :nodoc:
+                1
+            end
+
             def diff(v)
                 ZERO
             end
