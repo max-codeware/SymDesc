@@ -33,9 +33,7 @@ module SymDesc
 		    end
 
 		    def to_s(io = nil)
-		    	_io = io || __new_io(1)
-		    	_io << 'π'
-		    	return io ? io : (_io.close; io.string)
+		    	return io ? (io << 'π') : 'π'
 		    end
 		    
 		end

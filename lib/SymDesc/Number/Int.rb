@@ -139,12 +139,7 @@ module SymDesc
         # of the integer value. If a StringIO object is passed, the string
         # representation is appended to the buffer and the buffer is returned. 
         def to_s(io = nil)
-            if io
-                __io_append(io,value) 
-            else
-                return @value.to_s 
-            end
-            io
+            return io ? (io << @value) : @value.to_s
         end
 
         alias :inspect :to_s
