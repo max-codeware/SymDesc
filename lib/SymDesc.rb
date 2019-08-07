@@ -80,9 +80,11 @@ module SymDesc
 	       SymDesc/BinaryOp/Prod.rb
 	       SymDesc/BinaryOp/Div.rb
 	       SymDesc/BinaryOp/Power.rb
-	       SymDesc/Constant/Constant.rb
+	       SymDesc/Constants/Constant.rb
 	       SymDesc/Constants/E.rb 
 	       SymDesc/Constants/Pi.rb
+	       SymDesc/Constants/Nan.rb
+	       SymDesc/Constants/Infinity.rb
 	  |.each do |file|
 		  require_relative file
 	  end
