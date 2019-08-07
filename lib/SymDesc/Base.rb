@@ -57,14 +57,13 @@ module SymDesc::Base
    	    false 
    	end
 
-    for name in %w|+ - * / ** opt_sum opt_sub opt_prod opt_div opt_pow ==|
-        eval "
-            def #{name}(b)
-                raise NotImplementedError, \"Method `#{name}' for \#\{self.class\} not implemented yiet\"
-            end"
-    end
-
-    for name in %w||
+    %w|+ - * / ** 
+       opt_sum opt_sub opt_prod opt_div opt_pow 
+       ==
+       get_size to_s
+       diff diff!
+       sub sub!|.each do |name|
+        abstract_method name
     end
 
 protected

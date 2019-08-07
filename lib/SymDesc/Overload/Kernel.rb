@@ -34,4 +34,10 @@ module Kernel
     	args.map! { |v| v.is_a?(Symbol) ? var(v) : v.symdescfy }
     	return (args.size == 1) ? args[0] : args
     end
+
+    def abstract_method(name)
+        define_method name do |*args|
+            raise NotImplementedError,"Method `#{name}' for #{self.class} not implemented yiet"
+        end
+    end
 end
