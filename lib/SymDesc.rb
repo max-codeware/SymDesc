@@ -63,13 +63,13 @@ module SymDesc
 	}
 
 	%w|
-	       SymDesc/Base.rb 
-	       SymDesc/Variable.rb 
-	       SymDesc/Neg.rb
 	       SymDesc/Overload/Numeric.rb 
 	       SymDesc/Overload/Object.rb 
 	       SymDesc/Overload/Symbol.rb
 	       SymDesc/Overload/Kernel.rb 
+	       SymDesc/Base.rb 
+	       SymDesc/Variable.rb 
+	       SymDesc/Neg.rb
 	       SymDesc/Number/Number.rb 
 	       SymDesc/Number/Int.rb 
 	       SymDesc/Number/Ratio.rb
