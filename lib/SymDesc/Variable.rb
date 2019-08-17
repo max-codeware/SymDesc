@@ -211,6 +211,10 @@ module SymDesc
         def get_size # :nodoc:
             return @name.size 
         end
+
+        def depends_on?(v)
+            __dep_check(v) { return v == self }
+        end
     
     private
         
