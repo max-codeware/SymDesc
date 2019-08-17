@@ -127,7 +127,7 @@ private
     end
 
     def __sub_else(b)
-        # return Nan if b.nan?
+        return Nan if b.nan?
         return Sub.new(self,b)  
     end
 
