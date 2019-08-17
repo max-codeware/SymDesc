@@ -21,6 +21,13 @@
 # SOFTWARE.
 
 module SymDesc
+
+  #  ____
+  # |  _ \ _____      _____ _ __
+  # | |_) / _ \ \ /\ / / _ \ '__|
+  # |  __/ (_) \ V  V /  __/ |
+  # |_|   \___/ \_/\_/ \___|_|
+
   class Power < BinaryOp
     def +(b)
       case b
@@ -75,10 +82,10 @@ module SymDesc
     end
 
     def get_size # :nodoc:
-      return @left.get_size                  +
+      return @left.get_size +
              (@left.is_a?(BinaryOp) ? 2 : 0) +
-             3                               +
-             @right.get_size                 +
+             3 +
+             @right.get_size +
              (@right.is_a?(BinaryOp) ? 2 : 0)
     end
 

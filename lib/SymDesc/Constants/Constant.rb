@@ -21,11 +21,37 @@
 # SOFTWARE.
 
 module SymDesc
+
+  #   ____                _              _
+  #  / ___|___  _ __  ___| |_ __ _ _ __ | |_
+  # | |   / _ \| '_ \/ __| __/ _` | '_ \| __|
+  # | |__| (_) | | | \__ \ || (_| | | | | |_
+  #  \____\___/|_| |_|___/\__\__,_|_| |_|\__|
+
+  ##
+  # This is the base class of all math (and numeric)
+  # constants that must be inherited by all the specific
+  # subclasses implementing a specific cons.
+  #
+  # Symbolic constants are represented only by a singleton
+  # class, that is instances of these classes are not allowed.
+  # The reason of this is, considered the nature of the represented
+  # object, creating multiple instances of something constant is
+  # pointless.
   class Constant
     extend Base
     class << self
       undef_method :new
 
+      ##
+      # :call-seq:
+      #   const + obj -> new_obj
+      #
+      # Performs a symbolic sum between a symbolic constant
+      # and `obj`, returning a new symbolic object.
+      # Simplification is automatic.
+      #
+      # If `obj` is not a symbolic object, a conversion is attempted
       def +(b)
         b = b.symdescfy
         case b
@@ -42,7 +68,7 @@ module SymDesc
         end
       end
 
-      def opt_sum(b)
+      def opt_sum(b) # :nodoc:
         b = b.symdescfy
         case b
         when Neg
@@ -56,6 +82,15 @@ module SymDesc
         end
       end
 
+      ##
+      # :call-seq:
+      #   const - obj -> new_obj
+      #
+      # Performs a symbolic subtraction between a symbolic constant
+      # and `obj`, returning a new symbolic object.
+      # Simplification is automatic.
+      #
+      # If `obj` is not a symbolic object, a conversion is attempted
       def -(b)
         b = b.symdescfy
         case b
@@ -72,7 +107,7 @@ module SymDesc
         end
       end
 
-      def opt_sub(b)
+      def opt_sub(b) # :nodoc:
         b = b.symdescfy
         case b
         when Neg
@@ -86,6 +121,8 @@ module SymDesc
         end
       end
 
+      ##
+      # Returns the constant negated (wrapped in SymDesc::Neg class)
       def -@
         Neg.new(self)
       end
@@ -94,10 +131,26 @@ module SymDesc
         1
       end
 
+      ##
+      # :call-seq:
+      #   diff(var) -> symbolic_zero
+      #   diff(*var) -> array
+      #
+      # It performs the derivative of a math constant on a
+      # symbolic variable or a set of symbolic variables.
+      # If only one variable is provided, it returns only a
+      # symbolic object, while if multiple variables are provided,
+      # an array of symbolic zeroes is returned
       def diff(*v)
         __diff(v) { ZERO }
       end
 
+      ##
+      # :call-seq
+      #   depends_on?(var) -> false
+      #
+      # It returns always false because a math constant doesn't
+      # depend on any variable
       def depends_on?(v)
         __dep_check(v) { return false }
       end

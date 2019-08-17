@@ -208,6 +208,11 @@ module SymDesc
       return @name.size
     end
 
+    ##
+    # :call-seq:
+    #   depends_on?(var) -> true or false
+    #
+    # It returns true if the provided variable is equal to self
     def depends_on?(v)
       __dep_check(v) { return v == self }
     end
