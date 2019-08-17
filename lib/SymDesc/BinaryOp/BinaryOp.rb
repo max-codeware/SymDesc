@@ -42,13 +42,17 @@ module SymDesc
         # ensuring the passed arguments are of symboli type.
         def initialize(left,right)
             [left,right].each { |v| raise ArgumentError, 
-                "Expected symbolic object but #{v.class} found" unless v.is_symbolic? }
+                "Expected symbolic object but #{v.is_a?(Class) ? v : v.class} found" unless v.is_symbolic? }
     		@left  = left
     		@right = right
     	end
 
         def -@
             Neg.new self
+        end
+
+        def depends_on?(v)
+            __dep_check(v) { return @left.depends_on(v) || @right.depends_on(v) }
         end
 
         ##
