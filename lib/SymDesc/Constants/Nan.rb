@@ -37,8 +37,8 @@ module SymDesc
                 return io ? (io << "Nan") : "Nan"
             end
 
-            def diff(v)
-            	self
+            def diff(*v)
+            	__diff(v) { self }
             end
 
     	end
