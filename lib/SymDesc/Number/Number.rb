@@ -23,5 +23,13 @@
 module SymDesc
     class Number
         include Base
+
+        def diff(*v)
+            __diff(v) { 0 }
+        end
+
+        def depends_on(v)
+        	__dep_check(v) {return false }
+        end
     end
 end
