@@ -75,10 +75,6 @@ module SymDesc
   		end
   	end
 
-  	def -@
-  		Neg.new(self)
-  	end
-
     def get_size # :nodoc:
     	return @left.get_size                  +
     	       (@left.is_a?(BinaryOp) ? 2 : 0) + 

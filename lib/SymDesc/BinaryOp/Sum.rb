@@ -56,10 +56,6 @@ module SymDesc
             end		
     	end
 
-        def -@
-            return Neg.new self
-        end
-
         ##
         # :call-seq:
         #   to_s -> string

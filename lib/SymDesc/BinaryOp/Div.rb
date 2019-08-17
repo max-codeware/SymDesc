@@ -75,10 +75,6 @@ module SymDesc
                 nil 
             end
         end
-        
-        def -@
-        	return Neg.new(self)
-        end
 
         def get_size # :nodoc:
         	size = @left.get_size + 
