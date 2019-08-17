@@ -95,8 +95,12 @@ module SymDesc
                 1
             end
 
-            def diff(v)
-                ZERO
+            def diff(*v)
+                __diff(v) { ZERO }
+            end
+
+            def depends_on?(v)
+                __dep_check(v) { return false }
             end
 
         end
