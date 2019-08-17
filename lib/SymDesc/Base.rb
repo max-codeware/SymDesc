@@ -90,6 +90,53 @@ protected
         end
     end
 
+    ##
+    # This is an internal helper routine for differential operation. It unifies the operations
+    # on the provided splat to the method `diff' exposed as API.
+    # It accepts only an array of variables as argument and a block with the code for the differential.
+    #
+    # The usage is this:
+    # ```
+    # class Variable
+    #   def diff(*vars)
+    #     return __diff(vars) { |var| var == self ? 1 : 0 }
+    #   end
+    # end
+    # ```
+    #
+    # So that the behavour of `Variable#diff` is:
+    # ```
+    # x,y,z = var :x, :y, :z
+    #
+    # x.diff x     #=> 1
+    # x.diff y     #=> 0
+    # x.diff x,y,z #=> [1,0,0]
+    # x.diff       #=> []
+    # ```
+    def __diff(ary)
+        raise Bug, "Internal method `__diff' accepts only an array as argument" unless ary.is_a? Array 
+        if ary.size == 1 
+            return yield ary[0]
+        else 
+            return ary.map {|var| var.is_a?(Variable) ? yield(var) : 0}
+        end 
+    end
+
+    # This is a helper function for method `depends_on` that avoids duplications of code
+    # for the argumet check.
+    #
+    # The usage is this:
+    # ```
+    # def depends_on?(v)
+    #   __dep_check(v) { ... }
+    # end
+    # ```
+    # This routine doesn't affect the result of the passed block
+    def __dep_check(v)
+       raise ArgumentError, "Expected Variable but #{v.is_a?(Class) ? v : v.class}" unless v.is_a? Variable
+       yield
+    end
+
 if ENGINE.mruby?
 
     ##
