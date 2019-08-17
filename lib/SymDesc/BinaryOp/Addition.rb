@@ -25,7 +25,7 @@ module SymDesc
     ##
     # This module contains the methods for
     # addition and subtraction operations
-    # for SymDesc::Sum and SymDesc::Sub classes- 
+    # for SymDesc::Sum and SymDesc::Sub classes 
     module Addition
 
     	##
