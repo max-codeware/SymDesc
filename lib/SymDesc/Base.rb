@@ -59,10 +59,10 @@ module SymDesc::Base
 
     %w|+ - * / ** 
        opt_sum opt_sub opt_prod opt_div opt_pow 
-       ==
        get_size to_s
        diff diff!
-       sub sub!|.each do |name|
+       sub sub!
+       depends_on?|.each do |name|
         abstract_method name
     end
 
