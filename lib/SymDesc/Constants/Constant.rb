@@ -28,6 +28,7 @@ module SymDesc
             undef_method :new
 
             def +(b)
+                b = b.symdescfy
                 return case b
                 when Neg
                 	self - b.argument
@@ -43,6 +44,7 @@ module SymDesc
             end
 
             def opt_sum(b)
+                b = b.symdescfy
             	return case b
             	when Neg
             		opt_sub b.argument
@@ -56,6 +58,7 @@ module SymDesc
             end
 
             def -(b)
+                b = b.symdescfy
             	return case b
             	when Neg
             		self + b.argument
@@ -71,6 +74,7 @@ module SymDesc
             end
 
             def opt_sub(b)
+                b = b.symdescfy
             	return case b
             	when Neg
             		opt_sum b.argument
