@@ -215,6 +215,10 @@ module SymDesc
       __dep_check(v) { return v == self }
     end
 
+    def diff(*v)
+      __diff(v) { ONE }
+    end
+
     private
 
     # def __sum_self(b)
