@@ -128,7 +128,7 @@ module SymDesc::Base
   def __diff(ary)
     raise Bug, "Internal method `__diff' accepts only an array as argument" unless ary.is_a? Array
     if ary.size == 1
-      return yield ary[0]
+      return depends_on?(ary[0]) ? yield(ary[0]) : ZERO
     else
       return ary.map { |var| (var.is_a?(Variable) && depends_on?(var)) ? yield(var) : ZERO }
     end

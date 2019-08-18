@@ -26,10 +26,10 @@ module SymDesc
     include Base
 
     def diff(*v)
-      __diff(v) { 0 }
+      __diff(v) { ZERO }
     end
 
-    def depends_on(v)
+    def depends_on?(v)
       __dep_check(v) { return false }
     end
 
