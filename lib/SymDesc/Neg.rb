@@ -180,5 +180,13 @@ module SymDesc
       end
       return @argument.get_size + extra
     end
+
+    def depends_on?(v)
+      __dep_check(v) { @argument.depends_on? v }
+    end
+
+    def diff(*v)
+      __diff(v) { |var| depends_on?(var) ? -@argument.diff(var) : ZERO }
+    end
   end
 end
