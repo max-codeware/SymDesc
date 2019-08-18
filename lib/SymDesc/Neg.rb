@@ -232,11 +232,7 @@ module SymDesc
       else
         __io_append(_io, SUB_ID, @argument)
       end
-      if !io
-        _io.close
-        return _io.string
-      end
-      return io
+      return io ? io : (_io.clese; _io.string)
     end
 
     alias :inspect :to_s
@@ -254,7 +250,7 @@ module SymDesc
     end
 
     def diff(*v)
-      __diff(v) { |var| depends_on?(var) ? -@argument.diff(var) : ZERO }
+      __diff(v) { |var| @argument.depends_on?(var) ? -@argument.diff(var) : ZERO }
     end
   end
 end
