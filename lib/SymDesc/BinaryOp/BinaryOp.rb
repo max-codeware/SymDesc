@@ -74,6 +74,10 @@ module SymDesc
       return @left.get_size + @right.get_size + 3
     end
 
+    def inspect(io = nil) # :nodoc:
+      to_s io
+    end
+
     protected
 
     def left=(b)
