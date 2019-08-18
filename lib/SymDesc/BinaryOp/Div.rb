@@ -44,53 +44,33 @@ module SymDesc
     end
 
     def +(b)
-      return self if b == 0
       b = b.symdescfy
       case b
-      when Neg
-        return self - b.argument
       when Div
         __sum_div b
         # when Power
       else
-        __sum_else b
+        super
       end
     end
 
     def opt_sum(b) # :nodoc:
-      case b
-      when 0
-        self
-      when self
-        self * Two
-      else
-        nil
-      end
+      super
     end
 
     def -(b)
-      return self if b == 0
       b = b.symdescfy
       case b
-      when Neg
-        return self + b.argument
       when Div
         __sub_div b
         # when Power
       else
-        __sub_else b
+        super
       end
     end
 
     def opt_sub(b) # :nodoc:
-      case b
-      when 0
-        self
-      when self
-        ZERO
-      else
-        nil
-      end
+      super
     end
 
     def get_size # :nodoc:
@@ -133,18 +113,8 @@ module SymDesc
     return (@left * b.right + b.left * @right) / @right * b.right
   end
 
-  def __sum_else(b)
-    # return Nan if b.nan?
-    return Sum.new(self, b)
-  end
-
   def __sub_div(b)
     return ZERO if self == b
     return (@left * b.right - b.left * @right) / @right * b.right
-  end
-
-  def __sub_else(b)
-    return Nan if b.nan?
-    return Sub.new(self, b)
   end
 end

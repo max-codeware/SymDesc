@@ -23,7 +23,7 @@
 module SymDesc
   class Nan < Constant
     class << self
-      for name in %w(+ - * / ** opt_sum opt_sub opt_prod opt_div opt_pow diff)
+      for name in %w(+ - * / ** opt_sum opt_sub opt_prod opt_div opt_pow)
         eval "def #{name}(b); return self; end"
       end
 

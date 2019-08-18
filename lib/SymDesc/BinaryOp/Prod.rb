@@ -47,12 +47,12 @@ module SymDesc
       when Prod, Div
         __sum_prod_div b
       else
-        __sum_else b
+        __sum_else(b) || super
       end
     end
 
     def opt_sum(b) #:nodoc:
-      return self =~ b ? (self + b) : nil
+      return self =~ b ? (self + b) : super
     end
 
     def -(b)
@@ -64,12 +64,12 @@ module SymDesc
       when Prod, Div
         __sub_prod_var b
       else
-        __sub_else b
+        __sub_else(b) || super
       end
     end
 
     def opt_sub(b) # :nodoc:
-      return self =~ b ? (self - b) : nil
+      return self =~ b ? (self - b) : super
     end
 
     def to_s(io = nil)
@@ -134,10 +134,9 @@ module SymDesc
       end
     end
 
-    alias :__sum_else :__sum_variable
-    # def __sum_else(b)
-    #     return self =~ b ? (Prod.new(@left + 1, @right)) : Sum.new(self,b)
-    # end
+    def __sum_else(b)
+      return self =~ b ? (Prod.new(@left + 1, @right)) : nil
+    end
 
     def __sub_variable(b)
       return self =~ b ? (@left - 1 * @right) : Sub.new(self, b)
@@ -154,10 +153,8 @@ module SymDesc
       end
     end
 
-    alias :__sum_else :__sum_variable
-    # def __sub_else(b)
-    #     return self =~ b ? (@left - 1, @right) : Sub.new(self,b)
-    # end
-
+    def __sub_else(b)
+      return self =~ b ? Prod.new(@left - 1, @right) : nil
+    end
   end
 end

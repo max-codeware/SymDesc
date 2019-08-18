@@ -56,31 +56,18 @@ module SymDesc
       def +(b)
         b = b.symdescfy
         case b
-        when Neg
-          self - b.argument
-        when 0
-          self
-        when Nan
+        when Infinity
           b
-        when self
-          Prod.new(TWO, self)
         else
-          Sum.new(self, b)
+          super
         end
       end
 
       def opt_sum(b) # :nodoc:
-        b = b.symdescfy
-        case b
-        when Neg
-          opt_sub b.argument
-        when 0
-          self
-        when self
-          self + b
-        else
-          nil
+        if b == Infinity
+          return b
         end
+        super
       end
 
       ##
@@ -95,31 +82,19 @@ module SymDesc
       def -(b)
         b = b.symdescfy
         case b
-        when Neg
-          self + b.argument
-        when 0
-          self
-        when self
-          ZERO
-        when Nan
-          b
+        when Infinity
+          -b
         else
-          Sub.new(self, b)
+          super
         end
       end
 
       def opt_sub(b) # :nodoc:
         b = b.symdescfy
-        case b
-        when Neg
-          opt_sum b.argument
-        when 0
-          self
-        when self
-          ZERO
-        else
-          nil
+        if b == Infinity
+          return -b
         end
+        super
       end
 
       ##

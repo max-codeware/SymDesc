@@ -232,7 +232,7 @@ module SymDesc
       else
         __io_append(_io, SUB_ID, @argument)
       end
-      return io ? io : (_io.clese; _io.string)
+      return io ? io : (_io.close; _io.string)
     end
 
     alias :inspect :to_s

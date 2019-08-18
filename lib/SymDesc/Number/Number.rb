@@ -32,5 +32,9 @@ module SymDesc
     def depends_on(v)
       __dep_check(v) { return false }
     end
+
+    def inspect(io = nil)
+      to_s io
+    end
   end
 end

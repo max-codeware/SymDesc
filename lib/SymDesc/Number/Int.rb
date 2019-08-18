@@ -72,22 +72,22 @@ module SymDesc
       return Int.new(@value + b) if b.is_a? Integer
       b = b.symdescfy
       case b
+      when Infinity
+        b
       when Ratio, BinaryOp
         b + self
       when Int
         Int.new(@value + b.value)
-      when Neg
-        self - b.argument
       else
-        Sum.new(b, self)
+        super
       end
     end
 
     def opt_sum(b) # :nodoc:
-      if b.is_a? Number
+      if b.is_a?(Number)
         return self + b
       end
-      nil
+      super
     end
 
     ##
@@ -105,22 +105,22 @@ module SymDesc
       return Int.new(@value - b) if b.is_a? Integer
       b = b.symdescfy
       case b
+      when Infinity
+        -b
       when Ratio
         __sub_ratio b
       when Int
         Int.new(value - b.value)
-      when Neg
-        self + b.argument
       else
-        Sub.new(self, b)
+        super
       end
     end
 
     def opt_sub(b) # :nodoc:
-      if b.is_a? Number
+      if b.is_a?(Number)
         return self - b
       end
-      nil
+      super
     end
 
     ##
@@ -140,8 +140,6 @@ module SymDesc
     def to_s(io = nil)
       return io ? (io << @value) : @value.to_s
     end
-
-    alias :inspect :to_s
 
     ##
     # :call-seq:

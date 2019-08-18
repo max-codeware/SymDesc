@@ -59,7 +59,7 @@ module SymDesc
       elsif tmp = @right.opt_sum(b)
         @left.send self.class::OP, tmp
       else
-        nil
+        super
       end
     end
 
@@ -94,7 +94,7 @@ module SymDesc
       elsif tmp = @right.opt_sub(b)
         @left.send self.class::OP, tmp
       else
-        nil
+        super
       end
     end
   end

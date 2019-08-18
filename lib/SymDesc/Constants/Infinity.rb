@@ -26,27 +26,19 @@ module SymDesc
       def +(b)
         b = b.symdescfy
         case b
-        when Nan
-          b
-        when Neg
-          self - b.argument
-        when Number
+        when Number, self
           self
         else
-          Sum.new(self, b)
+          super
         end
       end
 
       def opt_sum(b) # :nodoc:
         case b
-        when Nan
-          b
-        when Neg
-          opt_sub b.argument
         when Number
           self
         else
-          nil
+          super
         end
       end
 
@@ -55,26 +47,21 @@ module SymDesc
         case b
         when Nan, self
           Nan
-        when Neg
-          self + b.argument
         when Number
           self
         else
-          Sub.new(self, b)
+          auper
         end
       end
 
       def opt_sub(b)
-        b = b.symdescfy
         case b
-        when Nan, self
-          Nan
-        when Neg
-          opt_sum b.argument
+        # when Nan, self
+        #   Nan
         when Number
           self
         else
-          nil
+          super
         end
       end
 

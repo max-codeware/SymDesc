@@ -30,56 +30,26 @@ module SymDesc
 
   class Power < BinaryOp
     def +(b)
+      b = b.symdescfy
       case b
-      when Neg
-        self - b.argument
-      when 0
-        self
       when self
         @left == 2 ? @left ** (@right + 1) : Prod.new(TWO, self)
       else
-        Sum.new(self, b)
+        super
       end
     end
 
-    def opt_sum(b) # :nodoc:
-      case b
-      when Neg
-        opt_sub b.argument
-      when 0
-        self
-      when self
-        self + b
-      else
-        nil
-      end
-    end
+    # def opt_sum(b) # :nodoc:
+    #   super
+    # end
 
-    def -(b)
-      case b
-      when Neg
-        self + b.argument
-      when 0
-        self
-      when self
-        ZERO
-      else
-        Sub.new(self, b)
-      end
-    end
+    # def -(b)
+    #   super
+    # end
 
-    def opt_sub(b) # :nodoc:
-      case b
-      when Neg
-        opt_sum b.argument
-      when 0
-        self
-      when self
-        ZERO
-      else
-        nil
-      end
-    end
+    # def opt_sub(b) # :nodoc:
+    #   super
+    # end
 
     def get_size # :nodoc:
       return @left.get_size +

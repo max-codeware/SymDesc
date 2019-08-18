@@ -124,21 +124,21 @@ module SymDesc
     def +(b)
       b = b.symdescfy
       case b
+      when Infinity
+        b
       when Number
         __sum_number b
       when BinaryOp
         b + self
-      when Neg
-        self - b.argument
       else
-        Sum.new b, self
+        super
       end
     end
 
     def opt_sum(b) # :nodoc:
-      b = b.symdescfy
-      return self + b if b.is_a? Number
-      nil
+      # b = b.symdescfy
+      return self + b if b.is_a?(Number)
+      super
     end
 
     ##
@@ -154,6 +154,8 @@ module SymDesc
     def -(b)
       b = b.symdescfy
       case b
+      when Infinity
+        -b
       when Number
         __sub_number b
       when BinaryOp
@@ -161,14 +163,14 @@ module SymDesc
       when Neg
         self + b.argument
       else
-        Sub.new self, b
+        super
       end
     end
 
     def opt_sub(b) # :nodoc:
-      b = b.symdescfy
-      return self - b if b.is_a? Number
-      nil
+      # b = b.symdescfy
+      return self - b if b.is_a?(Number)
+      super
     end
 
     ##
@@ -211,8 +213,6 @@ module SymDesc
       end
       io
     end
-
-    alias :inspect :to_s
 
     def get_size # :nodoc:
       return @numerator.get_size +
