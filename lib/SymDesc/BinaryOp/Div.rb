@@ -22,25 +22,25 @@
 
 module SymDesc
 
-  #  ____  _       
+  #  ____  _
   # |  _ \(_)_   __
   # | | | | \ \ / /
-  # | |_| | |\ V / 
-  # |____/|_| \_/  
+  # | |_| | |\ V /
+  # |____/|_| \_/
   class Div < BinaryOp
-    
     class << self
-      def new(left,right)
-        case 
+      def new(left, right)
+        case
         when left == 0 && right == 0
-          Nan 
+          Nan
         when left == 0
-          ZERO 
+          ZERO
         when right == 0
           left.is_a?(Neg) ? -Infinity : Infinity
         else
           super
         end
+      end
     end
 
     def +(b)

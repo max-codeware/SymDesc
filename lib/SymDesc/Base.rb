@@ -41,7 +41,22 @@ module SymDesc::Base
   LPAR = "("
   RPAR = ")"
 
+  REQUIRES_BASIC_OP = false
+
   class Bug < StandardError; end
+
+  def self.included(klass)
+    if klass::REQUIRES_BASIC_OP
+      klass.include SymDesc::BasicOp
+      # puts "called"
+    end
+  end
+
+  def self.extended(klass)
+    if klass::REQUIRES_BASIC_OP
+      klass.extend SymDesc::BasicOp
+    end
+  end
 
   ##
   # Returns always true. Every object that includes

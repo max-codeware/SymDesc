@@ -65,6 +65,7 @@ module SymDesc
     SymDesc/Overload/Symbol.rb
     SymDesc/Overload/Kernel.rb
     SymDesc/Base.rb
+    SymDesc/BasicOp
     SymDesc/Variable.rb
     SymDesc/Neg.rb
     SymDesc/Number/Number.rb

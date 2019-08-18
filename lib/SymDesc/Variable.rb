@@ -32,6 +32,7 @@ module SymDesc
   # This class describes a symbolic variable. It can be resolved
   # with a numerical value or substituted with another expression.
   class Variable
+    REQUIRES_BASIC_OP = true
     include Base
 
     class << self
@@ -108,26 +109,28 @@ module SymDesc
     def +(b)
       b = b.symdescfy
       case b
-
-      when self.class
-        __sum_self b
-      when Neg
-        self - b.argument
+      # when self.class
+      #   __sum_self b
+      # when Neg
+      #   self - b.argument
       when BinaryOp
         b + self
-      when Numeric
-        __sum_numeric b
+        # when Numeric
+        #   __sum_numeric b
       else
-        Sum.new(self, b)
+        #   Sum.new(self, b)
+        super
       end
     end
 
     def opt_sum(b) # :nodoc:
-      return self if b == 0
-      if self == b
-        return Prod.new(TWO, self)
-      end
-      nil
+      # return self if b == 0
+      # if self == b
+      #   return Prod.new(TWO, self)
+      # end
+      # nil
+      return self + b if self =~ b
+      super
     end
 
     # :call-seq:
@@ -140,28 +143,24 @@ module SymDesc
     def -(b)
       b = b.symdescfy
       case b
-
-      when self.class
-        __sub_self b
-      when Neg
-        self + b.argument
+      # when self.class
+      #   __sub_self b
+      # when Neg
+      #   self + b.argument
       when BinaryOp
         __sub_binaryop b
-      when Numeric
-        __sub_numeric b
+        # when Numeric
+        #   __sub_numeric b
       else
-        Sub.new(self, b)
+        #  Sub.new(self, b)
+        super
       end
     end
 
     def opt_sub(b) # :nodoc:
-      return self if b == 0
+      # return self if b == 0
       return self - b if self =~ b
-      nil
-    end
-
-    def -@
-      return Neg.new(self)
+      super
     end
 
     # :call-seq:
@@ -176,7 +175,6 @@ module SymDesc
 
     def =~(b) # :nodoc:
       case b
-
       when Variable
         self == b
       when Prod, Div
@@ -219,21 +217,21 @@ module SymDesc
 
     private
 
-    def __sum_self(b)
-      return Prod.new(TWO, self) if self == b
-      Sum.new(self, b)
-    end
+    # def __sum_self(b)
+    #   return Prod.new(TWO, self) if self == b
+    #   Sum.new(self, b)
+    # end
 
-    def __sum_numeric(b)
-      return self if b.zero?
-      b = b.symdescfy if b.is_a? Float
-      Sum.new(self, b)
-    end
+    # def __sum_numeric(b)
+    #   return self if b.zero?
+    #   b = b.symdescfy if b.is_a? Float
+    #   Sum.new(self, b)
+    # end
 
-    def __sub_self(b)
-      return ZERO if self == b
-      Sub.new(self, b)
-    end
+    # def __sub_self(b)
+    #   return ZERO if self == b
+    #   Sub.new(self, b)
+    # end
 
     def __sub_binaryop(b)
       tmp = nil
@@ -255,10 +253,10 @@ module SymDesc
       return tmp || Sub.new(self, b)
     end
 
-    def __sub_numeric(b)
-      return self if b == 0
-      b = b.symdescfy if b.is_a? Float
-      return Sub.new(self, b)
-    end
+    # def __sub_numeric(b)
+    #   return self if b == 0
+    #   b = b.symdescfy if b.is_a? Float
+    #   return Sub.new(self, b)
+    # end
   end
 end
