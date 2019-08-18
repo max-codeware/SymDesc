@@ -37,9 +37,9 @@ module SymDesc::Base
   MUL_ID = "*"
   DIV_ID = "/"
   POW_ID = "**"
-  SPACE  = " "
-  LPAR   = "("
-  RPAR   = ")"
+  SPACE = " "
+  LPAR = "("
+  RPAR = ")"
 
   REQUIRES_BASIC_OP = false
 
@@ -130,7 +130,7 @@ module SymDesc::Base
     if ary.size == 1
       return yield ary[0]
     else
-      return ary.map { |var| (var.is_a?(Variable) && depends_on?(var) ? yield(var) : ZERO }
+      return ary.map { |var| (var.is_a?(Variable) && depends_on?(var)) ? yield(var) : ZERO }
     end
   end
 
