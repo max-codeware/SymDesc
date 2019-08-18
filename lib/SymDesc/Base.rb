@@ -37,23 +37,22 @@ module SymDesc::Base
   MUL_ID = "*"
   DIV_ID = "/"
   POW_ID = "**"
-  SPACE = " "
-  LPAR = "("
-  RPAR = ")"
+  SPACE  = " "
+  LPAR   = "("
+  RPAR   = ")"
 
   REQUIRES_BASIC_OP = false
 
   class Bug < StandardError; end
 
   def self.included(klass)
-    if klass::REQUIRES_BASIC_OP
+    if klass.const_defined?(:REQUIRES_BASIC_OP) && klass::REQUIRES_BASIC_OP
       klass.include SymDesc::BasicOp
-      # puts "called"
     end
   end
 
   def self.extended(klass)
-    if klass::REQUIRES_BASIC_OP
+    if klass.const_defined?(:REQUIRES_BASIC_OP) && klass::REQUIRES_BASIC_OP
       klass.extend SymDesc::BasicOp
     end
   end

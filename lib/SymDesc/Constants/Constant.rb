@@ -154,6 +154,11 @@ module SymDesc
       def depends_on?(v)
         __dep_check(v) { return false }
       end
+
+      def ===(b)
+        return true if self == b
+        super
+      end
     end
   end
 end
