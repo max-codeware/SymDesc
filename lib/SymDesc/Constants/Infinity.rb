@@ -24,6 +24,7 @@ module SymDesc
   class Infinity < Constant
     class << self
       def +(b)
+        b = b.symdescfy
         case b
         when Nan
           b
@@ -50,6 +51,7 @@ module SymDesc
       end
 
       def -(b)
+        b = b.symdescfy
         case b
         when Nan, self
           Nan
@@ -63,6 +65,7 @@ module SymDesc
       end
 
       def opt_sub(b)
+        b = b.symdescfy
         case b
         when Nan, self
           Nan
