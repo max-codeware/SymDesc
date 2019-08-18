@@ -47,7 +47,7 @@ module SymDesc
       when Sub
         self + b.left - b.right
       else
-        __sum_else b
+        __sum_else(b) || super
       end
     end
 
@@ -82,7 +82,7 @@ module SymDesc
       when Sub
         self - b.left + b.right
       else
-        __sub_else b
+        __sub_else(b) || super
       end
     end
 

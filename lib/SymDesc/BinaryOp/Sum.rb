@@ -82,8 +82,8 @@ module SymDesc
         tmp + @right
       elsif (tmp = @right.opt_sum(b))
         @left + tmp
-      else
-        Sum.new(self, b)
+        # else
+        #   Sum.new(self, b)
       end
     end
 
@@ -92,8 +92,8 @@ module SymDesc
         tmp + @right
       elsif (tmp = @right.opt_sub(b))
         @left + tmp
-      else
-        Sub.new(self, b)
+        # else
+        #   Sub.new(self, b)
       end
     end
   end

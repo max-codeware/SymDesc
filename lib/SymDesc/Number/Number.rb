@@ -22,6 +22,7 @@
 
 module SymDesc
   class Number
+    REQUIRES_BASIC_OP = true
     include Base
 
     def diff(*v)

@@ -33,6 +33,8 @@ module SymDesc
   # This class represents a generic binary operation and it is inherited
   # by the main algebric operations
   class BinaryOp
+    REQUIRES_BASIC_OP = true
+
     include Base
 
     attr_reader :left, :right
