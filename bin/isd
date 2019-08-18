@@ -1,8 +1,8 @@
 #! /usr/bin/env ruby
 require "irb"
 
-require_relative '../lib/SymDesc.rb'
+require_relative "../lib/SymDesc.rb"
 
 include SymDesc
-
+$x, $y, $z = var :x, :y, :z
 IRB.start
