@@ -32,13 +32,13 @@ module SymDesc
     def +(b)
       case b
       when Neg
-        return self - b.argument
+        self - b.argument
       when 0
         self
       when self
         @left == 2 ? @left ** (@right + 1) : Prod.new(TWO, self)
       else
-        return Sum.new(self, b)
+        Sum.new(self, b)
       end
     end
 
@@ -64,7 +64,7 @@ module SymDesc
       when self
         ZERO
       else
-        return Sub.new(self, b)
+        Sub.new(self, b)
       end
     end
 
