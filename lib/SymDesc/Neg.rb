@@ -127,6 +127,74 @@ module SymDesc
 
     ##
     # :call-seq:
+    #   neg * obj -> new_obj
+    #
+    # It multiplies `neg` and `obj` returning a new object
+    # as result of the operation.
+    #
+    # Automatic simplifications are:
+    # ```
+    # (-a)(-b)    -> ab
+    # -a * b      -> -(ab)
+    # ```
+    #
+    # If `obj` is not symbolic, a conversion is attempted
+    def *(b)
+      b = b.symdescfy
+      case b
+      when Neg
+        @argument * b.argument
+      else
+        -(@argument * b)
+      end
+    end
+
+    def opt_prod(b) # :nodoc:
+      if b.is_a? Neg
+        tmp = @argument.opt_prod b.argument
+      else
+        tmp = @argument.opt_prod b
+        tmp &&= -tmp
+      end
+      tmp
+    end
+
+    ##
+    # :call-seq:
+    #   neg / obj -> new_obj
+    #
+    # It divides `neg` by `obj` returning a new object
+    # as result of the operation.
+    #
+    # Automatic simplifications are:
+    # ```
+    # (-a)\(-b)   -> -(a\b)
+    # (-a)\b      -> -(b\a)
+    # ```
+    #
+    # If `obj` is not symbolic, a conversion is attempted
+    def /(b)
+      b = b.symdescfy
+      case b
+      when Neg
+        @argument / b.argument
+      else
+        -(@argument / b)
+      end
+    end
+
+    def opt_div(b) # :nodoc:
+      if b.is_a? Neg
+        tmp = @argument.opt_div b.argument
+      else
+        tmp = @argument.opt_div b
+        tmp &&= -tmp
+      end
+      tmp
+    end
+
+    ##
+    # :call-seq:
     #   -neg -> argument
     #
     # It performs the unary negation of `neg`.
