@@ -73,8 +73,6 @@ module SymDesc
       io
     end
 
-    alias :inspect :to_s
-
     private
 
     def __sum_else(b)
