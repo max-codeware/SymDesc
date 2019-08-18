@@ -97,5 +97,9 @@ module SymDesc
         super
       end
     end
+
+    def diff(*v)
+      __diff(v) { |var| @left.diff(var).send self.class::OP, @right.diff(var) }
+    end
   end
 end

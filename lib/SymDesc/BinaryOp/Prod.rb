@@ -110,6 +110,10 @@ module SymDesc
       (@left.is_a?(Number) && @right.is_a?(Variable))
     end
 
+    def diff(*v)
+      __diff(v) { |var| @left.diff(var) * @right + @left * @right.diff(var) }
+    end
+
     private
 
     def __prod_append(io, branch)

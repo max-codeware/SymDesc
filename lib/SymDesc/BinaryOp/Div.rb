@@ -89,32 +89,40 @@ module SymDesc
       __op_append(io, @right, :r)
       return io ? io : (_io.close; _io.string)
     end
-  end
 
-  private
-
-  def __op_append(io, branch, kind)
-    case kind
-    when :l
-      branch.is_a?(Sum) || branch.is_a?(Sub) ?
-        __io_append(io, LPAR, branch, RPAR) :
-        __io_append(io, branch)
-    when :r
-      branch.is_a?(BinaryOp) ?
-        __io_append(io, LPAR, branch, RPAR) :
-        __io_append(io, branch)
-    else
-      raise Bug, "Unknown branch type #{kind}"
+    def diff(*v)
+      __diff(v) do |var|
+        lft = @left.diff(var)
+        rht = @right.diff(var)
+        return (lft * @right - @left * rht) / @right ** TWO
+      end
     end
-  end
 
-  def __sum_div(b)
-    return self * TWO if self == b
-    return (@left * b.right + b.left * @right) / @right * b.right
-  end
+    private
 
-  def __sub_div(b)
-    return ZERO if self == b
-    return (@left * b.right - b.left * @right) / @right * b.right
+    def __op_append(io, branch, kind)
+      case kind
+      when :l
+        branch.is_a?(Sum) || branch.is_a?(Sub) ?
+          __io_append(io, LPAR, branch, RPAR) :
+          __io_append(io, branch)
+      when :r
+        branch.is_a?(BinaryOp) ?
+          __io_append(io, LPAR, branch, RPAR) :
+          __io_append(io, branch)
+      else
+        raise Bug, "Unknown branch type #{kind}"
+      end
+    end
+
+    def __sum_div(b)
+      return self * TWO if self == b
+      return (@left * b.right + b.left * @right) / @right * b.right
+    end
+
+    def __sub_div(b)
+      return ZERO if self == b
+      return (@left * b.right - b.left * @right) / @right * b.right
+    end
   end
 end

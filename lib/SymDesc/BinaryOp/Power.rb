@@ -76,6 +76,19 @@ module SymDesc
       @left == b
     end
 
+    # def diff(*v)
+    #   __diff(v) do |var|
+    #     d_lft = @left.diff(obj)
+    #     d_rht = @right.diff(obj)
+    #     if d_rht == 0
+    #       next @left ** (@right - ONE) * @right * d_lft
+    #     elsif d_lft == 0
+    #       next self * d_rht * Log.new(@left)
+    #     end
+    #     self * (d_rht * Log.new(@left) + @right * d_lft / @left)
+    #   end
+    # end
+
     private
   end
 end
