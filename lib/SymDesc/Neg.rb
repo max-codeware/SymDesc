@@ -93,7 +93,7 @@ module SymDesc
 
     ##
     # :call-seq:
-    #   neg  obj -> new_obj
+    #   neg - obj -> new_obj
     #
     # It subtracts `obj` to `neg` returning a new object
     # as result of the operation.
