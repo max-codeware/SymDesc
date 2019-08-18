@@ -39,6 +39,7 @@ module SymDesc
   # object, creating multiple instances of something constant is
   # pointless.
   class Constant
+    REQUIRES_BASIC_OP = true
     extend Base
     class << self
       undef_method :new
