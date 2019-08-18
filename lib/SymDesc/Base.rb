@@ -130,7 +130,7 @@ module SymDesc::Base
     if ary.size == 1
       return yield ary[0]
     else
-      return ary.map { |var| var.is_a?(Variable) ? yield(var) : 0 }
+      return ary.map { |var| var.is_a?(Variable) ? yield(var) : ZERO }
     end
   end
 
