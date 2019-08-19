@@ -64,6 +64,7 @@ module SymDesc
       @left.is_a?(BinaryOp) ? __io_append(_io, LPAR, @left, RPAR) : __io_append(_io, @left)
       __io_append(_io, SPACE, POW_ID, SPACE)
       @right.is_a?(BinaryOp) ? __io_append(_io, LPAR, @right, RPAR) : __io_append(_io, @right)
+      io ? io : (_io.close; _io.string)
     end
 
     # Returns true if the base of the power is `b`.
