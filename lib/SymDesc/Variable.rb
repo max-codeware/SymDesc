@@ -163,6 +163,20 @@ module SymDesc
       super
     end
 
+    def *(b)
+      b = b.symdescfy
+      case b
+      when Prod, Div, Power
+        b * self
+      else
+        super
+      end
+    end
+
+    def opt_prod(b)
+      (self =~ b) ? self * b : super
+    end
+
     # :call-seq:
     #   var == obj -> true or false
     #
