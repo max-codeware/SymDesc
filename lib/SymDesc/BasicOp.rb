@@ -23,17 +23,19 @@
 module SymDesc
   module BasicOp
     def +(b)
-      case b
-      when Neg
-        self - b.argument
-      when 0
-        self
-      when self
-        TWO * self
-      when Nan
-        b
-      else
-        Sum.new(self, b)
+      __op b do |v|
+        case v
+        when Neg
+          self - v.argument
+        when 0
+          self
+        when self
+          SymDesc::TWO * self
+        when Nan
+          v
+        else
+          Sum.new(self, v)
+        end
       end
     end
 
@@ -49,17 +51,19 @@ module SymDesc
     end
 
     def -(b)
-      case b
-      when Neg
-        self + b.argument
-      when 0
-        self
-      when self
-        ZERO
-      when Nan
-        b
-      else
-        Sub.new(self, b)
+      __op b do |v|
+        case v
+        when Neg
+          self + v.argument
+        when 0
+          self
+        when self
+          SymDesc::ZERO
+        when Nan
+          v
+        else
+          Sub.new(self, v)
+        end
       end
     end
 
@@ -79,13 +83,17 @@ module SymDesc
     end
 
     def *(b)
-      case b
-      when 0, Nan
-        b
-      when Neg
-        -(self * b.argument)
-      else
-        b.is_a?(Number) ? Prod.new(b, self) : Prod.new(self, b)
+      __op b do |v|
+        case v
+        when 0, Nan
+          v
+        when self
+          Power.new(self, SymDesc::TWO)
+        when Neg
+          -(self * v.argument)
+        else
+          v.is_a?(Number) ? Prod.new(v, self) : Prod.new(self, v)
+        end
       end
     end
 
@@ -93,6 +101,8 @@ module SymDesc
       case b
       when 0, Nan
         b
+      when self
+        Power.new(self, SymDesc::TWO)
       when Neg
         (tmp = opt_prod(b.argument)) ? -tmp : tmp
       else
@@ -101,15 +111,17 @@ module SymDesc
     end
 
     def /(b)
-      case b
-      when 0
-        Infinity
-      when Nan
-        b
-      when Neg
-        -(self / b.argument)
-      else
-        Div.new(self, b)
+      __op b do |v|
+        case v
+        when 0
+          Infinity
+        when Nan
+          v
+        when Neg
+          -(self / v.argument)
+        else
+          Div.new(self, v)
+        end
       end
     end
 
@@ -122,6 +134,40 @@ module SymDesc
       else
         nil
       end
+    end
+
+    def **(b)
+      __op b do |v|
+        case v
+        when 0
+          SymDesc::ONE
+        when Neg
+          SymDesc::ONE / self ** v.value
+        when Nan
+          v
+        else
+          Power.new(self, v)
+        end
+      end
+    end
+
+    def opt_pow(b)
+      case b
+      when 0
+        SymDesc::ONE
+      when Neg
+        (tmp = opt_pow(b.argument)) ? SymDesc::ONE / tmp : tmp
+      when Nan
+        b
+      else
+        nil
+      end
+    end
+
+    protected
+
+    def __op(v)
+      yield v.symdescfy
     end
   end
 end
