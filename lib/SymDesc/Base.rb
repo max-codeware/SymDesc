@@ -31,6 +31,10 @@
 # all the symbolic objects. It includes some basic methods,
 # constants and virtual methods that should be common
 # to all the objects or classes.
+#
+# If the implemented class needs the BasicOp module, when Base
+# is included or extended, automatically BasicOp is added too if
+# `REQUIRES_BASIC_OP` is found and set to true
 module SymDesc::Base
   SUM_ID = "+"
   SUB_ID = "-"
@@ -111,7 +115,7 @@ module SymDesc::Base
   # ```
   # class Variable
   #   def diff(*vars)
-  #     return __diff(vars) { |var| var == self ? 1 : 0 }
+  #     return __diff(vars) { |var| var == self ? ONE : ZERO }
   #   end
   # end
   # ```
