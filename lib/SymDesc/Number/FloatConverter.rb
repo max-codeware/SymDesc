@@ -87,7 +87,7 @@ module SymDesc
       end
 
       # Given two numbers `a` and `b`, and knowing
-      # at least one is a float (or a rational) computes
+      # at least one is a float (or a rational), it computes
       # the numerator and the denominator of the division
       # `a/b`
       def __ratio_from_numeric2(a, b)
