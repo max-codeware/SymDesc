@@ -174,9 +174,32 @@ module SymDesc
     end
 
     ##
-    # Returns SymDesc::Ratio negated (wrapped in SymDesc::Neg class)
-    def -@
-      return Neg.new self
+    # :call-seq:
+    #   ratio ** obj -> new_obj
+    #
+    # Performs a symbolic power between a symbolic rational
+    # and `obj`, returning a new symbolic object if the operation
+    # creates a new tree branch, or a symbolic number if
+    # `obj` is a SymDesc::Number. Simplification is automatic.
+    #
+    # If b is not a symbolic object, a conversion is attempted
+    def **(b)
+      b = b.symdescfy
+      case b
+      when Infinity
+        b
+      when Int
+        return Ratio.new(@numerator ** b.value, @denominator ** b.value)
+      else
+        super
+      end
+    end
+
+    def opt_pow(b) # :nodoc:
+      if b.is_a? Int
+        return self ** b
+      end
+      super
     end
 
     ##
