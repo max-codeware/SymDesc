@@ -206,7 +206,7 @@ module SymDesc
 
     ##
     # :call-seq:
-    #   `neg` == `obj`
+    #   neg == obj
     #
     # It compares `obj` with `neg`, returning true if `obj`
     # is a Neg and has the same argument.
