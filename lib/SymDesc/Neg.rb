@@ -250,7 +250,7 @@ module SymDesc
     end
 
     def diff(*v)
-      __diff(v) { |var| @argument.depends_on?(var) ? -@argument.diff(var) : ZERO }
+      __diff(v) { |var| -@argument.diff(var) }
     end
   end
 end
