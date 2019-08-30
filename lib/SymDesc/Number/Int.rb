@@ -123,10 +123,23 @@ module SymDesc
       super
     end
 
-    ##
-    # Returns SymDesc::Int negated (wrapped in SymDesc::Neg class)
-    def -@
-      Neg.new(self)
+    def **(b)
+      b = b.symdescfy
+      case b
+      when Int
+        Int.new(@value ** b.value)
+      when Infinity
+        b
+      else
+        super
+      end
+    end
+
+    def opt_pow(b) # :nodoc:
+      if b.is_a? Int
+        return self ** b
+      end
+      super
     end
 
     ##
