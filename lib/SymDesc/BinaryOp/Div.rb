@@ -84,9 +84,9 @@ module SymDesc
 
     def to_s(io = nil)
       _io = io || __new_io(get_size)
-      __op_append(io, @left, :l)
+      __op_append(_io, @left, :l)
       __io_append(_io, SPACE, DIV_ID, SPACE)
-      __op_append(io, @right, :r)
+      __op_append(_io, @right, :r)
       return io ? io : (_io.close; _io.string)
     end
 
@@ -103,7 +103,7 @@ module SymDesc
     def __op_append(io, branch, kind)
       case kind
       when :l
-        branch.is_a?(Sum) || branch.is_a?(Sub) ?
+        branch.is_a?(Sum) || branch.is_a?(Sub) || branch.is_a?(Power) ?
           __io_append(io, LPAR, branch, RPAR) :
           __io_append(io, branch)
       when :r
