@@ -20,28 +20,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-module Kernel
-  def var(*args)
-    if SymDesc::Variable.sym_config == :global
-      args.map! { |name| SymDesc::Variable.new name }
-    else
-      args.map! { |name| SymDesc::Variable.__new__ name, self }
+module SymDesc
+  class Dynamic
+    def method_missing(name, *args)
+      if args.empty? && name.to_s =~ /^[a-z0-9]+$/
+        return Variable.__new__ name, self
+      end
+      super
     end
-    return (args.size == 1) ? args[0] : args
-  end
-
-  def cas(*args)
-    args.map! { |v| v.is_a?(Symbol) ? var(v) : v.symdescfy }
-    return (args.size == 1) ? args[0] : args
-  end
-
-  def abstract_method(name)
-    define_method name do |*args|
-      raise NotImplementedError, "Method `#{name}' for #{self.class} not implemented yiet"
-    end
-  end
-
-  def dynamic(&block)
-    Dynamic.new.instance_eval &block
   end
 end

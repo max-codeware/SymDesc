@@ -48,7 +48,7 @@ module SymDesc
 
       def __new__(name, object) # :nodoc:
         name = __var_name name
-        __ensure_config :local
+        __ensure_config :local unless object.is_a? Dynamic
         if object.instance_variable_defined? VAR_ID
           v = object.instance_variable_get VAR_ID
           var = v[name] || (v[name] = __new(name))
