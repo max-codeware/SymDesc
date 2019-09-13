@@ -176,7 +176,7 @@ module SymDesc::Base
   # ```
   # This routine doesn't affect the result of the passed block
   def __dep_check(v)
-    raise ArgumentError, "Expected Variable but #{v.is_a?(Class) ? v : v.class}" unless v.is_a? Variable
+    raise ArgumentError, "Expected Variable but #{v.is_a?(Class) ? v : v.class} found" unless v.is_a? Variable
     yield
   end
 
