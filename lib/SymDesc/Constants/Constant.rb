@@ -103,9 +103,9 @@ module SymDesc
         Neg.new(self)
       end
 
-      def get_size # :nodoc:
-        1
-      end
+      # def get_size # :nodoc:
+      #   1
+      # end
 
       ##
       # :call-seq:
