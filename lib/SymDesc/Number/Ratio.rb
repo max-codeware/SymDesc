@@ -75,11 +75,11 @@ module SymDesc
       private
 
       def __ensure_rationalizable(*values)
-        values.each do |v|
+        values.each_with_index do |v, i|
           unless (v.is_a? Integer) ||
                  (v.is_a? Float) ||
                  (v.is_a? Rational) ||
-                 (v.nil? && values.size > 1)
+                 (v.nil? && i > 0)
             raise ArgumentError,
                   "Expected Integer of Float but #{v.class} found"
           end

@@ -62,7 +62,7 @@ module SymDesc
       when Variable
         __sub_variable b
       when Prod, Div
-        __sub_prod_var b
+        __sub_prod_div b
       else
         __sub_else(b) || super
       end
