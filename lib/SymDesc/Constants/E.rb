@@ -27,12 +27,16 @@ module SymDesc
         Math::E
       end
 
-      def get_size
-        return 1
+      def get_size # :nodoc:
+        return 7
       end
 
       def to_s(io = nil)
         return io ? (io << "e") : "e"
+      end
+
+      def to_ruby(io = nil)
+        return io ? (io << "Math::E") : "Math::E"
       end
     end
   end

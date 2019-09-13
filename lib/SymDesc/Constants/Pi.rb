@@ -34,6 +34,14 @@ module SymDesc
       def to_s(io = nil)
         return io ? (io << "π") : "π"
       end
+
+      def to_ruby(io = nil)
+        return io ? (io << "Math::PI") : "Math::PI"
+      end
+
+      def get_size # :nodoc:
+        8
+      end
     end
   end
 end

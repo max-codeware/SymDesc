@@ -68,6 +68,14 @@ module SymDesc
       def to_s(io = nil)
         return io ? (io << "∞") : "∞"
       end
+
+      def to_ruby(io = nil)
+        return io ? (io << "Math::INFINITY") : "Math::INFINITY"
+      end
+
+      def get_size # :nodoc:
+        14
+      end
     end
   end
 end

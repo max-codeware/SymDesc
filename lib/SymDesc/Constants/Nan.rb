@@ -38,6 +38,14 @@ module SymDesc
       def diff(*v)
         __diff(v) { self }
       end
+
+      def to_ruby(io = nil)
+        return io ? (io << "Math::NAN") : "Math::NAN"
+      end
+
+      def get_size # nodoc:
+        9
+      end
     end
   end
 end

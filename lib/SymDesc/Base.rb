@@ -73,12 +73,39 @@ module SymDesc::Base
     false
   end
 
+  def call(**argh)
+    v = (vars.reject! { |n| n.default_value }) || []
+      .map! { |n| [n.name, n.default_value] }
+    exp = "#{(v + argh.to_a).map! { |a| a.join("=") }
+      .join(";")};#{to_ruby}"
+    eval exp
+  end
+
+  def to_proc
+    v = vars
+    v.map! do |n|
+      n.default_value ? "#{n.to_s}: #{n.default_value}" : "#{n.to_s}:"
+    end
+    exp = "
+      Proc.new do |#{v.join(",")}|
+        #{to_ruby}
+      end
+    "
+    eval exp
+  end
+
+  def coerce(b)
+    [b.symdescfy, self]
+  end
+
   %w|+ - * / **
      opt_sum opt_sub opt_prod opt_div opt_pow
      get_size to_s
      diff diff!
      sub sub!
-     depends_on?|.each do |name|
+     depends_on?
+     to_ruby
+     vars|.each do |name|
     abstract_method name
   end
 

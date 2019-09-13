@@ -240,7 +240,16 @@ module SymDesc
     def get_size # :nodoc:
       return @numerator.get_size +
              @denominator.get_size +
-             1
+             3
+    end
+
+    def to_ruby(io = nil)
+      if io
+        __io_append(io, @numerator, DIV_ID, @denominator.to_f)
+      else
+        return "#{@numerator}/#{@denominator.to_f}"
+      end
+      io
     end
 
     private
