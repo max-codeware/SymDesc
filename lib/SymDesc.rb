@@ -84,6 +84,8 @@ module SymDesc
     SymDesc/Constants/Pi.rb
     SymDesc/Constants/Nan.rb
     SymDesc/Constants/Infinity.rb
+    SymDesc/Functions/Function.rb
+    SymDesc/Functions/Log.rb
   |.each do |file|
     require_relative file
   end
