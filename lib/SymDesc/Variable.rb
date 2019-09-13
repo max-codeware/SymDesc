@@ -268,14 +268,18 @@ module SymDesc
       tmp = nil
       case b
       when Sum
+        # x - (a + b) -> x - a - b
         tmp = self - b.left - b.right
       when Sub
+        # x - (a - b) -> x - a + b
         tmp = self - b.left + b.right
       when Prod
+        # x - 2x -> -x
         if b =~ self
-          tmp = (b.left == 2) ? self : Prod.new(ONE - l, self)
+          tmp = (b.left == 2) ? -self : Prod.new(ONE - l, self)
         end
       when Div
+        # x - x/3 -> 2x/3
         if b =~ self
           n = self * b.right - b.left
           tmp = n / b.right
