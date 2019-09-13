@@ -204,6 +204,28 @@ module SymDesc
       @argument
     end
 
+    def **(b)
+      b = b.symdescfy
+      case b
+      when Neg
+        -(ONE / @value ** b.argument)
+      else
+        -(@argument ** b)
+      end
+    end
+
+    def opt_pow(b) # :nodoc:
+      case b
+      when Neg
+        tmp = @argument.opt_pow(b.argument)
+        tmp &&= -(ONE / tmp)
+      else
+        tmp = @argument.opt_pow(b)
+        tmp &&= -tmp
+      end
+      tmp
+    end
+
     ##
     # :call-seq:
     #   neg == obj
@@ -236,6 +258,7 @@ module SymDesc
     end
 
     alias :inspect :to_s
+    alias :to_ruby :to_s
 
     def get_size # :nodoc:
       extra = 1
