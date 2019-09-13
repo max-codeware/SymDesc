@@ -54,8 +54,8 @@ module SymDesc
   end
 
   SYM_CONFIG = {
-    :ratio_precision => 1e-16,           # Precision adopted to convert floats into rationals
-    :symdesc_engine => engine,          # Engine SymDesc is running on (ruby/mruby)
+    :ratio_precision => 1e-16,      # Precision adopted to convert floats into rationals
+    :symdesc_engine => engine,      # Engine SymDesc is running on (ruby/mruby)
     :var_scope => :global,          # Scope of symbolic variables (:global/:local)
   }
 
@@ -64,6 +64,7 @@ module SymDesc
     SymDesc/Overload/Object.rb
     SymDesc/Overload/Symbol.rb
     SymDesc/Overload/Kernel.rb
+    SymDesc/Dynamic.rb
     SymDesc/Base.rb
     SymDesc/BasicOp
     SymDesc/Variable.rb
