@@ -222,6 +222,7 @@ module SymDesc
     end
 
     alias :inspect :to_s
+    alias :to_ruby :to_s
 
     def get_size # :nodoc:
       return @name.size
