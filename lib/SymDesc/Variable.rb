@@ -93,10 +93,17 @@ module SymDesc
       end
     end
 
-    attr_reader :name
+    attr_reader :name, :default_value
 
     def initialize(name) # :nodoc:
       @name = name
+      @default_value = nil
+    end
+
+    def default_value=(value)
+      raise ArgumentError, "Numeric value expected but \
+                    #{value.is_a?(Class) ? value : value.class} found" unless value.is_a? Numeric
+      @default_value = value
     end
 
     # :call-seq:
