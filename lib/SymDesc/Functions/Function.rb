@@ -27,12 +27,18 @@ module SymDesc
     attr_reader :argument
 
     def initialize(arg)
-      raise "Expected symbolic object but #{arg.is_a?(Class) ? arg : arg.class}" unless arg.is_symbolic?
+      raise "Expected symbolic object but \
+          #{arg.is_a?(Class) ? arg : arg.class} found" unless arg.is_symbolic?
       @argument = arg
     end
 
     def ==(obj)
       (self.class == obj.class) && (@argument == obj.argument)
+    end
+
+    def vars(argv = [])
+      @argument.vars argv
+      argv
     end
   end
 end

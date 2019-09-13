@@ -233,6 +233,11 @@ module SymDesc
       __diff(v) { ONE }
     end
 
+    def vars(argv = [])
+      argv << self unless argv.include? self
+      argv
+    end
+
     private
 
     # def __sum_self(b)

@@ -135,6 +135,10 @@ module SymDesc
         return true if self == b
         super
       end
+
+      def vars(argv = [])
+        argv
+      end
     end
   end
 end

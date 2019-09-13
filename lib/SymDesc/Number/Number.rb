@@ -100,12 +100,22 @@ module SymDesc
       __diff(v) { ZERO }
     end
 
+    ##
+    # It returns always false since no number depends on any variable
     def depends_on?(v)
       __dep_check(v) { return false }
     end
 
+    ##
+    # Same as `to_s`
     def inspect(io = nil)
       to_s io
+    end
+
+    alias :to_ruby :inspect
+
+    def vars(argv = [])
+      argv
     end
 
     protected

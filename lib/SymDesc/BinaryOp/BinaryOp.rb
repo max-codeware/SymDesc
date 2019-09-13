@@ -78,6 +78,14 @@ module SymDesc
       to_s io
     end
 
+    alias :to_ruby :inspect
+
+    def vars(argv = [])
+      @left.vars argv
+      @right.vars argv
+      argv
+    end
+
     protected
 
     def left=(b)
