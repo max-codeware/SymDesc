@@ -158,6 +158,7 @@ module SymDesc::Base
   # ```
   def __diff(ary)
     raise Bug, "Internal method `__diff' accepts only an array as argument" unless ary.is_a? Array
+    ary = ary.first if ary.first.is_a? Array
     if ary.size == 1
       return depends_on?(ary[0]) ? yield(ary[0]) : ZERO
     else
