@@ -141,6 +141,8 @@ module SymDesc
         case v
         when 0
           SymDesc::ONE
+        when 1
+          self
         when Neg
           SymDesc::ONE / self ** v.value
         when Nan
