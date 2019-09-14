@@ -74,7 +74,7 @@ module SymDesc::Base
   end
 
   def call(**argh)
-    v = (vars.reject! { |n| n.default_value }) || []
+    v = ((vars.reject! { |n| !n.default_value }) || [])
       .map! { |n| [n.name, n.default_value] }
     exp = "#{(v + argh.to_a).map! { |a| a.join("=") }
       .join(";")};#{to_ruby}"
