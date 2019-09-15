@@ -29,6 +29,8 @@ module SymDesc
   # |_|   \___/ \_/\_/ \___|_|
 
   class Power < BinaryOp
+    OP = :**
+
     def +(b)
       b = b.symdescfy
       case b

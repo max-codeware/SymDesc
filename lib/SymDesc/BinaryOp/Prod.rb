@@ -29,6 +29,8 @@ module SymDesc
   # |_|   |_|  \___/ \__,_|
 
   class Prod < BinaryOp
+    OP = :*
+
     class << self
       def new(left, right)
         return ZERO if left == 0 || right == 0

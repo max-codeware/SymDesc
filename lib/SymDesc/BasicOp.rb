@@ -144,7 +144,7 @@ module SymDesc
         when 1
           self
         when Neg
-          SymDesc::ONE / self ** v.value
+          SymDesc::ONE / self ** v.argument
         when Nan
           v
         else

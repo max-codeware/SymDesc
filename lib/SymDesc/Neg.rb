@@ -258,7 +258,19 @@ module SymDesc
     end
 
     alias :inspect :to_s
-    alias :to_ruby :to_s
+
+    def to_ruby(io = nil)
+      _io = io || __new_io(get_size)
+      _io << SUB_ID << LPAR
+      @argument.to_ruby _io
+      _io << RPAR
+      io ? io : (_io.close; _io.string)
+    end
+
+    def vars(argv = [])
+      @argument.vars argv
+      argv
+    end
 
     def get_size # :nodoc:
       extra = 1

@@ -78,7 +78,15 @@ module SymDesc
       to_s io
     end
 
-    alias :to_ruby :inspect
+    def to_ruby(io = nil)
+      _io = io || __new_io(get_size)
+      _io << LPAR
+      @left.to_ruby _io
+      _io << RPAR << self.class::OP << LPAR
+      @right.to_ruby _io
+      _io << RPAR
+      io ? io : (_io.close; _io.string)
+    end
 
     def vars(argv = [])
       @left.vars argv

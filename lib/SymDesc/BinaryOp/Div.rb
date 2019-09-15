@@ -28,6 +28,8 @@ module SymDesc
   # | |_| | |\ V /
   # |____/|_| \_/
   class Div < BinaryOp
+    OP = :/
+
     class << self
       def new(left, right)
         case
