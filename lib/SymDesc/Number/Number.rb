@@ -50,6 +50,8 @@ module SymDesc
         __prod_number(b)
       when Infinity
         b
+      when Prod, Div
+        b * self
       else
         super
       end
