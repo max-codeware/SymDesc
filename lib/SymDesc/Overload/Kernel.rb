@@ -44,4 +44,6 @@ module Kernel
   def dynamic(&block)
     Dynamic.new.instance_eval &block
   end
+
+  private :var, :cas, :dynamic
 end
