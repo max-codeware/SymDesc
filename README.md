@@ -38,7 +38,7 @@ unique instance for the whole program of a symbolic variable given a name. It me
 called `x` with this setting enabled, there won't be two distinct instances called `x`.\
 If `:var_scope` is set to `:local`, a variable has a unque definition only inside the object it was created.\
 
-All the settings must be changed at the beginning of the program, otherwise it won't be possible to modyfy them
+All the settings must be changed at the beginning of the program, otherwise it won't be possible to modify them
 anymore.
 
 
