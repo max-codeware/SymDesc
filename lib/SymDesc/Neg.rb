@@ -281,7 +281,8 @@ module SymDesc
     end
 
     def depends_on?(v)
-      __dep_check(v) { @argument.depends_on? v }
+      __check_type(v, Variable)
+      return @argument.depends_on? v
     end
 
     def diff(*v)

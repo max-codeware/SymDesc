@@ -234,7 +234,8 @@ module SymDesc
     #
     # It returns true if the provided variable is equal to self
     def depends_on?(v)
-      __dep_check(v) { return v == self }
+      __check_type(v, Variable)
+      return v == self
     end
 
     def diff(*v)

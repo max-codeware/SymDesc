@@ -56,7 +56,8 @@ module SymDesc
     end
 
     def depends_on?(v)
-      __dep_check(v) { return @left.depends_on?(v) || @right.depends_on?(v) }
+      __check_type(v, Variable)
+      return @left.depends_on?(v) || @right.depends_on?(v)
     end
 
     ##

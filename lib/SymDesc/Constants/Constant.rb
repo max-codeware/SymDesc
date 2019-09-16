@@ -128,7 +128,8 @@ module SymDesc
       # It returns always false because a math constant doesn't
       # depend on any variable
       def depends_on?(v)
-        __dep_check(v) { return false }
+        __check_type(v, Variable)
+        return false
       end
 
       def ===(b)

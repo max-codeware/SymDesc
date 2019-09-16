@@ -171,19 +171,18 @@ module SymDesc
       end
     end
 
-    # This is a helper function for method `depends_on` that avoids duplications of code
-    # for the argumet check.
+    # This is a helper function to check the argument type.
     #
     # The usage is this:
     # ```
-    # def depends_on?(v)
-    #   __dep_check(v) { ... }
+    # def subs?(dict)
+    #   __check_type(dict, Hash)
+    #   # code
     # end
     # ```
     # This routine doesn't affect the result of the passed block
-    def __dep_check(v)
-      raise ArgumentError, "Expected Variable but #{v.is_a?(Class) ? v : v.class} found" unless v.is_a? Variable
-      yield
+    def __check_type(obj, type)
+      raise ArgumentError, "Expected #{type} but #{v.is_a?(Class) ? v : v.class} found" unless v.is_a? Variable
     end
 
     if ENGINE.mruby?
