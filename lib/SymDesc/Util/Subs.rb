@@ -22,36 +22,42 @@
 module SymDesc
   class Variable
     def subs(dict)
+      __check_type dict, Hash
       return dict[self] || dict[@name] || self
     end
   end
 
   class Number
     def subs(dict)
+      __check_type dict, Hash
       self
     end
   end
 
   class BinaryOp
     def subs(dict)
+      __check_type dict, Hash
       return @left.subs(dict).send self.class::OP, @right.subs(dict)
     end
   end
 
   class Neg
     def subs(dict)
+      __check_type dict, Hash
       return -(@argument.subs)
     end
   end
 
   class Constant
     def self.subs(dict)
+      __check_type dict, Hash
       self
     end
   end
 
   class Function
     def subs(dict)
+      __check_type dict, Hash
       return self.class.new @argument.subs(dict)
     end
   end
