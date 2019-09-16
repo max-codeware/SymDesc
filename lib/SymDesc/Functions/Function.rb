@@ -36,6 +36,11 @@ module SymDesc
       (self.class == obj.class) && (@argument == obj.argument)
     end
 
+    def depends_on?(v)
+      __check_type(v, Variable)
+      return @argument.depends_on? v
+    end
+
     def vars(argv = [])
       @argument.vars argv
       argv
