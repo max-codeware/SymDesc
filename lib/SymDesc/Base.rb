@@ -182,7 +182,7 @@ module SymDesc
     # ```
     # This routine doesn't affect the result of the passed block
     def __check_type(obj, type)
-      raise ArgumentError, "Expected #{type} but #{v.is_a?(Class) ? v : v.class} found" unless v.is_a? Variable
+      raise ArgumentError, "Expected #{type} but #{v.is_a?(Class) ? obj : obj.class} found" unless obj.is_a? type
     end
 
     if ENGINE.mruby?
