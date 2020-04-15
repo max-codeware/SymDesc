@@ -65,7 +65,7 @@ Example:
   	end
 
   	def to_symdesc
-       var self
+      var self
   	end
   end
 
