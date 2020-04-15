@@ -29,7 +29,7 @@ module SymDesc
     class << self
       def new(left, right)
         return left if right == 0
-        return right if left == 0
+        return -right if left == 0
         #tmp = nil
         # if left.is_a?(Neg) && right.is_a?(Neg)
         #	return Sub.new
