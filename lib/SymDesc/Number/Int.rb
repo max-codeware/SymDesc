@@ -131,12 +131,12 @@ module SymDesc
       when Infinity
         b
       else
-        super
+        self == 0 ? self : super
       end
     end
 
     def opt_pow(b) # :nodoc:
-      if b.is_a? Int
+      if b.is_a?(Int) || b == Infinity
         return self ** b
       end
       super

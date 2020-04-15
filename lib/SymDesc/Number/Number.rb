@@ -53,7 +53,7 @@ module SymDesc
       when Prod, Div
         b * self
       else
-        super
+        self == 0 ? self : super
       end
     end
 
@@ -62,7 +62,7 @@ module SymDesc
       when Number, Infinity
         self * b
       else
-        super
+        self == 0 ? self : super
       end
     end
 
