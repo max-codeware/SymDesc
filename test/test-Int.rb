@@ -54,6 +54,20 @@ class TestInt < Test::Unit::TestCase
     assert_nil @i.opt_sub var(:x)
   end
 
+  def test_power
+    assert_equal @i ** 2, 25, "Power between Int and Int failed"
+    assert_equal @i ** Infinity, Infinity, "Power between Int and Infinity failed"
+
+    exp = Power.new(@i, var(:x))
+    assert_equal @i ** var(:x), exp, "Power between Int and Variable failed"
+  end
+
+  def test_opt_pow
+    assert_equal @i.opt_pow(cas(2)), 25, "opt_pow between Int and Int failed"
+    assert_equal @i.opt_pow(Infinity), Infinity, "opt_pow between Int and Infinity failed"
+    assert_nil @i.opt_pow(var(:x))
+  end
+
   def test_eq
     i = Int.new 5
     assert (@i == i), "Comparison berween SymDesc::Int(5) and SymDesc::Int(5) failed"
