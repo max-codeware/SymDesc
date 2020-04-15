@@ -68,6 +68,7 @@ module SymDesc
     SymDesc/Base.rb
     SymDesc/BasicOp
     SymDesc/Variable.rb
+    SymDesc/DependentVariable.rb
     SymDesc/Neg.rb
     SymDesc/Number/Number.rb
     SymDesc/Number/Int.rb
@@ -86,6 +87,8 @@ module SymDesc
     SymDesc/Constants/Infinity.rb
     SymDesc/Functions/Function.rb
     SymDesc/Functions/Log.rb
+    SymDesc/Functions/Sin.rb
+    SymDesc/Functions/Cos.rb
     SymDesc/Util/Subs.rb
   |.each do |file|
     require_relative file
