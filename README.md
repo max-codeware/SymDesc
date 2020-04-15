@@ -12,6 +12,9 @@ Furthermore, it is possible to perform derivatives, substitutions and expression
 
 The project is still in an early stage, but it is usable and provides several opportunities.
 
+## Compatibility
+This library is compatible with Ruby >= 2.5.0 and mruby >= 2.0.1
+
 ## Installation
 
 ## Structure of the internal representation:
@@ -156,4 +159,4 @@ Now we can use this implementation to find a zero of a symbolic function:
 
 [] Better simplification for `Prod#*`
 [] Generation of C code for the symbolic solution
-[] Variable-dependent functions (`x[t]`)
+[x] Variable-dependent functions (`x[t]`)
