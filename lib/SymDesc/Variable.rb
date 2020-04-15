@@ -196,7 +196,7 @@ module SymDesc
 
     def =~(b) # :nodoc:
       case b
-      when Variable
+      when self.class
         self == b
       when Prod, Div
         b =~ self
@@ -245,6 +245,21 @@ module SymDesc
     def vars(argv = [])
       argv << self unless argv.include? self
       argv
+    end
+
+    ##
+    # :call-seq:
+    #   [](*args) -> DependentVariable
+    #
+    # It returns a non-defined function
+    # ```
+    # x, y, t = var :x, :y
+    #
+    # x[y]    => x(y)
+    # x[y[t]] => x(y(t))
+    # ```
+    def [](*args)
+      return DependentVar.new(self, *args)
     end
 
     private
