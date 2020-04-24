@@ -133,7 +133,7 @@ module SymDesc
         rescue SystemStackError => e
           raise RecursionError, "\
                     Recursive call to :__io_append detected\n\
-                    #{e.backtrace}"
+                    #{e.backtrace.join("\n")}"
         end
       end
     end
