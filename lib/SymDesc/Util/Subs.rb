@@ -61,4 +61,26 @@ module SymDesc
       return self.class.new @argument.subs(dict)
     end
   end
+
+  class DependentVar
+    def subs(dict, recursive: true)
+      __check_type dict, Hash 
+      return dict[self] if dict.has_key? self
+      if recursive
+        args = @args.map { |arg| arg.subs(dict) }
+      else
+        args = @args.map { |arg| dict.has_key?(arg) ? dict[arg] : arg}
+      end
+      return self if args == @args
+      return DependentVar.new(self.name, *args)
+    end
+  end
+
+  class Differential
+    def subs(dict)
+      __check_type dict, Hash 
+      return dict[self] if dict.has_key? self
+      Differential.new(@exp.subs(dict), @var.subs(dict))
+    end
+  end
 end
