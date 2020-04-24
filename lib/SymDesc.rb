@@ -68,8 +68,9 @@ module SymDesc
     SymDesc/Base.rb
     SymDesc/BasicOp
     SymDesc/Variable.rb
-    SymDesc/DependentVariable.rb
+    SymDesc/DependentVar.rb
     SymDesc/Neg.rb
+    SymDesc/Differential.rb
     SymDesc/Number/Number.rb
     SymDesc/Number/Int.rb
     SymDesc/Number/Ratio.rb
