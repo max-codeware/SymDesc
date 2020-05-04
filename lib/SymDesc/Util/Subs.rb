@@ -44,7 +44,7 @@ module SymDesc
   class Neg
     def subs(dict)
       __check_type dict, Hash
-      return -(@argument.subs)
+      return -(@argument.subs(dict))
     end
   end
 
