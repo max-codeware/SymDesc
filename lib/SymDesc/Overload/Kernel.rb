@@ -35,6 +35,11 @@ module Kernel
     return (args.size == 1) ? args[0] : args
   end
 
+  def diff(obj, v)
+    __check_type(v, Variable)
+    obj.symdescfy.diff(v)
+  end
+
   def abstract_method(name)
     define_method name do |*args|
       raise NotImplementedError, "Method `#{name}' for #{self.class} not implemented yiet"
@@ -45,5 +50,5 @@ module Kernel
     Dynamic.new.instance_eval &block
   end
 
-  private :var, :cas, :dynamic
+  private :var, :cas, :dynamic, :diff
 end
