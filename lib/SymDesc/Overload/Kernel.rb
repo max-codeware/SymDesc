@@ -36,8 +36,12 @@ module Kernel
   end
 
   def diff(obj, v)
-    __check_type(v, Variable)
-    obj.symdescfy.diff(v)
+    if obj.is_a? Array 
+      return obj.map do |el|
+        el.symdescfy.diff(v)
+      end 
+    end
+    return obj.symdescfy.diff(v)
   end
 
   def abstract_method(name)
