@@ -71,6 +71,12 @@ module SymDesc
     	       (@args == b.args)
     end
 
+    alias :eql? :==
+
+    def hash
+      [@name, @args].flatten!.hash
+    end
+
     def to_s(io = nil)
       _io = io || __new_io(get_size)
       __io_append(_io,@name, LPAR, args.join(","), RPAR)
