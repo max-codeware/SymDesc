@@ -55,10 +55,11 @@ module SymDesc
     undef_method :"default_value="
 
   	attr_reader :name, :args, :diff
+    alias :to_var :name
   
     def initialize(var, *args)
     	__arg_check(Variable, var, msg: "Expected Variable or DependentVar, not %s")
-    	__arg_check(Variable, *args, msg: "Expected Variable or DependentVar, not %s")
+    	# __arg_check(Variable, *args, msg: "Expected Variable or DependentVar, not %s")
       @name = var 
       @args = args
       @exp  = nil
