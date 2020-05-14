@@ -140,6 +140,9 @@ module SymDesc
       def vars(argv = [])
         argv
       end
+
+      alias :free_vars :vars
+      alias :dependent_vars :vars 
     end
   end
 end
