@@ -242,9 +242,20 @@ module SymDesc
       __diff(v) { ONE }
     end
 
+    ##
+    # :call-seq:
+    #   vars?([array]) -> array
+    #
+    # It returns an array with self
     def vars(argv = [])
       argv << self unless argv.include? self
       argv
+    end
+
+    alias :free_vars :vars
+
+    def dependent_vars(argv = [])
+      argv 
     end
 
     ##

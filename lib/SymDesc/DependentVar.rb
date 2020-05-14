@@ -123,9 +123,27 @@ module SymDesc
       return self
     end
 
-    def argument
+    def arguments
     	@args.dup 
     end
+
+    def vars(argv = [])
+      argv << self.to_var
+      @args.each { |a| a.vars(argv) }
+      argv 
+    end
+
+    def free_vars(argv = [])
+      @args.each { |a| a.free_vars(argv) }
+      argv
+    end
+
+    def dependent_vars(argv = [])
+      argv << self unless argv.include? self
+      @args.each { |a| a.dependent_vars argv }
+      argv 
+    end
+      
 
   private 
 

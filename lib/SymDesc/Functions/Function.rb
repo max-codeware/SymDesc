@@ -45,5 +45,16 @@ module SymDesc
       @argument.vars argv
       argv
     end
+
+    def free_vars(argv = [])
+      @argument.free_vars argv
+      argv
+    end
+
+    def dependent_vars(argv = [])
+      @argument.dependent_vars argv
+      argv
+    end
+
   end
 end

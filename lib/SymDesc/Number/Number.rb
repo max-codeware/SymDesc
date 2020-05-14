@@ -116,10 +116,17 @@ module SymDesc
     end
 
     alias :to_ruby :inspect
-
+    
+    # :call-seq:
+    #   vars([array]) -> array
+    # 
+    # It returns an empty array, since there are no variables
     def vars(argv = [])
       argv
     end
+
+    alias :free_vars :vars 
+    alias :dependent_vars :vars
 
     protected
 

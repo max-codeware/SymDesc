@@ -95,6 +95,18 @@ module SymDesc
       argv
     end
 
+    def free_vars(argv = [])
+      @left.free_vars argv
+      @right.free_vars argv
+      argv
+    end
+
+    def dependent_vars(argv = [])
+      @left.dependent_vars argv
+      @right.dependent_vars argv
+      argv
+    end
+
     protected
 
     def left=(b)
