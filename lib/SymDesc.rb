@@ -91,6 +91,7 @@ module SymDesc
     SymDesc/Functions/Sin.rb
     SymDesc/Functions/Cos.rb
     SymDesc/Util/Subs.rb
+    SymDesc/Util/Clone.rb
   |.each do |file|
     require_relative file
   end
