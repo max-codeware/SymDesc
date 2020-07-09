@@ -25,21 +25,84 @@ module SymDesc
   	REQUIRES_BASIC_OP = true
     include Base
 
-    def initialize(exp, var)
+    def self.new(exp, var)
+      @exp = exp.symdescfy
+      var = var.symdescfy
+      if exp == var
+        ONE
+      elsif !exp.depends_on?(var)
+        ZERO
+      elsif exp.is_a? DependentVar
+        index = exp.args.index(var)
+        super(exp, index)
+      else
+        exp.diff(var)
+      end  
+    end
+
+    def initialize(exp, arg_index)
+      __check_type(arg_index, Integer)
       @exp = exp 
-      @var = var
+      @arg_index = [arg_index]
     end
 
     def to_s(io = nil)
       _io = io || __new_io(get_size)
-      __io_append(_io, "Diff", LPAR, @exp, ",", @var, RPAR)
+      __io_append(_io, "Diff", indices, LPAR, @exp, RPAR)
       io ? io : (_io.close; _io.string)
     end
 
     alias :inspect :to_s
 
-    def get_size 
-      7 + @exp.get_size + @var.get_size
+    def indices
+      @arg_index.map(&:next)
     end
+
+    def get_size 
+      7 + @exp.get_size + @arg_index.size * 2 - 1
+    end
+
+    def depends_on?(v)
+      @exp.depends_on? v
+    end
+
+    def diff(*v)
+      args = @exp.args
+      __diff(v) do |var| 
+        idx = __get_dep_idx_wrt(var)
+        if idx.empty?
+          raise Bug, "No dependency on `#{var}' found"
+        else
+          d = ZERO
+          idx.each do |i|
+            cloned = self.clone 
+            cloned.arg_index << i
+            d += cloned * args[i].diff(v)
+          end
+          next d
+        end
+      end
+    end
+
+  protected
+    
+    def arg_index
+      @arg_index
+    end
+
+    def arg_index=(array)
+      @arg_index = array
+    end
+
+  private
+
+  def __get_dep_idx_wrt(v)
+    idx = []
+    @exp.args.each_with_index do |arg, i|
+      idx << i if arg.depends_on?(v)
+    end
+    return idx
+  end
+    
   end
 end
