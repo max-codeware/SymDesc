@@ -80,7 +80,12 @@ module SymDesc
     def subs(dict)
       __check_type dict, Hash 
       return dict[self] if dict.has_key? self
-      Differential.new(@exp.subs(dict), @var.subs(dict))
+      self.clone.__internal_subs(dict)
+    end
+  protected 
+    def __internal_subs(dict)
+      @exp = @exp.subs(dict)
+      return self
     end
   end
 end
