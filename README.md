@@ -63,13 +63,13 @@ Example:
 n1, n2 = cas 11, 2.33  #=> 11, 233/100
 
 class MyClass < String 
-	def initialize(name)
-		super
-	end
+  def initialize(name)
+    super
+  end
 
-	def to_symdesc
+  def to_symdesc
     var self
-	end
+  end
 end
 
 myvar = MyClass.new "v1"
