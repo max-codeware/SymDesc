@@ -23,7 +23,7 @@
 module SymDesc
   class Log < Function
     def to_s(io = nil)
-      _io = io || new_io(get_size)
+      _io = io || __new_io(get_size)
       __io_append(_io, "log", LPAR, @argument, RPAR)
       io ? io : (_io.close; _io.string)
     end

@@ -51,7 +51,7 @@ module Kernel
   end
 
   def dynamic(&block)
-    Dynamic.new.instance_eval &block
+    SymDesc::Dynamic.new.instance_eval &block
   end
 
   private :var, :cas, :dynamic, :diff
